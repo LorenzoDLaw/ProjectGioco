@@ -1,6 +1,5 @@
 package it.edu.iisguiio;
 
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -32,7 +31,7 @@ public class Zelda extends Application {
     final int HEIGHT_GIOCO = gameRow * TilesSize;
   //cordinate del personaggio
     double Xpersonaggio=WIDTH_GIOCO/2;
-    double Ypersonaggio=HEIGHT_GIOCO-80;
+    double Ypersonaggio=HEIGHT_GIOCO-TilesSize;
     //personaggio e nemici come rettangoli
     Rectangle personaggio = new Rectangle(Xpersonaggio,Ypersonaggio,TilesSize,TilesSize);
     Rectangle mostro1= new Rectangle(TilesSize,TilesSize);
@@ -42,9 +41,10 @@ public class Zelda extends Application {
     // ImageView per lo sprite del personaggio
     ImageView spritePersonaggio;
     Image spriteImage = new Image(getClass().getResourceAsStream("link.png"));
-    // classi 
-    Movimento movimento = new Movimento(personaggio,WIDTH_GIOCO,HEIGHT_GIOCO,spritePersonaggio, TilesSize);
+    // classe 
+    Personaggio richiamaPersonaggio; 
     Mostro mostro = new Mostro(mostro1, WIDTH_GIOCO, HEIGHT_GIOCO, TilesSize,percorsoX, percorsoY);
+    
     public static void main(String args[]) {
         launch(args);
     }
@@ -72,13 +72,13 @@ public class Zelda extends Application {
         // Aggiungi lo sprite al Pane del gioco
         gameWord.getChildren().addAll(personaggio, spritePersonaggio);
         
+        // Inizializza il gestore del personaggio
+        richiamaPersonaggio = new Personaggio(personaggio, WIDTH_GIOCO, HEIGHT_GIOCO, spritePersonaggio, TilesSize);
         
         //posizione il mostro
         mostro1.setFill(Color.RED); // Colore rosso per il mostro (puoi cambiarlo a tuo piacimento)
         mostro1.setX(WIDTH_GIOCO / 4); // Posizione iniziale del mostro
         mostro1.setY(HEIGHT_GIOCO / 4);
-        
-
         // Aggiungi il mostro al gioco
         gameWord.getChildren().add(mostro1);
 
@@ -88,12 +88,10 @@ public class Zelda extends Application {
 
         timelineGioco.play();
         timelineMenù.play();
-        
-        
     }
     
     public void premiTasto(KeyEvent e) {
-        movimento.premiTasto(e);
+        richiamaPersonaggio.muovi(e);
     }
 
     public void premiMouse(MouseEvent e) {
@@ -104,7 +102,6 @@ public class Zelda extends Application {
 
     public void aggiornaGioco() {
         mostro.muoviMostro();
-        
     }
 
     public void aggiornaMenù() {

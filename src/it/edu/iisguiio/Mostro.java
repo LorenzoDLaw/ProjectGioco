@@ -33,6 +33,9 @@ public class Mostro {
                 mostro.setY(newY);
                 passoCorrente++;
             }
+            if(passoCorrente==percorsoX.length) {
+            	passoCorrente=0;
+            }
         }
     }
 }
