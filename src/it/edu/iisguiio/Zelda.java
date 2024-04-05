@@ -25,7 +25,7 @@ public class Zelda extends Application {
     int defaultTileSize = 16;
     int scale = 3;
     int TilesSize = defaultTileSize * scale;
-    int gameColoum = 18;
+    int gameColoum = 16;
     int gameRow = 12;
     final int WIDTH_GIOCO = gameColoum * TilesSize;
     final int HEIGHT_GIOCO = gameRow * TilesSize;
@@ -94,10 +94,8 @@ public class Zelda extends Application {
         richiamaPersonaggio.muovi(e);
     }
 
-    public void premiMouse(MouseEvent e) {
-        if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
-            // Handle mouse click event
-        }
+    public void premiMouse(MouseEvent click) {
+        richiamaPersonaggio.attacca(click);
     }
 
     public void aggiornaGioco() {
