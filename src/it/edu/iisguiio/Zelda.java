@@ -36,11 +36,11 @@ public class Zelda extends Application {
     Rectangle personaggio = new Rectangle(Xpersonaggio,Ypersonaggio,TilesSize,TilesSize);
     Rectangle mostro1= new Rectangle(TilesSize,TilesSize);
     //percorso del mostro
-    double[] percorsoX = {100, 150, 200, 250, 300}; 
-    double[] percorsoY = {100, 120, 100, 80, 100};
+    double[] percorsoX = {2, 3, 3, 4, 5,5,5}; 
+    double[] percorsoY = {2, 2, 2, 2, 2,3,4};
     // ImageView per lo sprite del personaggio
     ImageView spritePersonaggio;
-    Image spriteImage = new Image(getClass().getResourceAsStream("link.png"));
+    Image spriteImage = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_down_1.png"));
     // classe 
     Personaggio richiamaPersonaggio; 
     Mostro mostro = new Mostro(mostro1, WIDTH_GIOCO, HEIGHT_GIOCO, TilesSize,percorsoX, percorsoY);
@@ -84,7 +84,6 @@ public class Zelda extends Application {
 
         
         scene.setOnKeyPressed(this::premiTasto);
-        scene.setOnMousePressed(this::premiMouse);
 
         timelineGioco.play();
         timelineMenù.play();
@@ -94,9 +93,6 @@ public class Zelda extends Application {
         richiamaPersonaggio.muovi(e);
     }
 
-    public void premiMouse(MouseEvent click) {
-        richiamaPersonaggio.attacca(click);
-    }
 
     public void aggiornaGioco() {
         mostro.muoviMostro();

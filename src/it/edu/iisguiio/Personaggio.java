@@ -2,8 +2,8 @@ package it.edu.iisguiio;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -17,6 +17,8 @@ public class Personaggio {
     boolean walkDown = true;
     boolean walkLeft = true;
     boolean walkRigth = true;
+    char lastDirection = 'w';
+    boolean HoAttaccato = false;
     public Personaggio(Rectangle personaggio, double maxWidth, double maxHeight, ImageView spritePersonaggio, double TilesSize) {
         this.personaggio = personaggio;
         this.maxWidth = maxWidth;
@@ -37,13 +39,28 @@ public class Personaggio {
     Image walk_left_2 = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_left_2.png"));
     Image walk_right_1 = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_right_1.png"));
     Image walk_right_2 = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_right_2.png"));
+    Image attack_down_1 = new Image(getClass().getResourceAsStream("Immagini/SpriteAttacco/attacco_down_1.png"));
+    Image attack_down_2 = new Image(getClass().getResourceAsStream("Immagini/SpriteAttacco/attacco_down_2.png"));
+    Image attack_up_1 = new Image(getClass().getResourceAsStream("Immagini/SpriteAttacco/attacco_up_1.png"));
+    Image attack_up_2 = new Image(getClass().getResourceAsStream("Immagini/SpriteAttacco/attacco_up_2.png"));
+    Image attack_left_1 = new Image(getClass().getResourceAsStream("Immagini/SpriteAttacco/attacco_left_1.png"));
+    Image attack_left_2 = new Image(getClass().getResourceAsStream("Immagini/SpriteAttacco/attacco_left_2.png"));
+    Image attack_right_1 = new Image(getClass().getResourceAsStream("Immagini/SpriteAttacco/attacco_right_1.png"));
+    Image attack_right_2 = new Image(getClass().getResourceAsStream("Immagini/SpriteAttacco/attacco_right_2.png"));
+    
     public void muovi(KeyEvent e) {
-        double deltaX = 0;
-        double deltaY = 0;
         double Xplayer = personaggio.getX();
         double Yplayer = personaggio.getY();
         if (e.getText().equals("w")) {
-        	Yplayer +=  -TilesSize;
+        	lastDirection = 'w';
+        	if(HoAttaccato==true) {
+        		personaggio.setWidth(TilesSize);
+            	spritePersonaggio.setFitWidth(TilesSize);
+            	personaggio.setHeight(TilesSize);
+                spritePersonaggio.setFitHeight(TilesSize);
+                Yplayer += TilesSize;
+        	}
+            Yplayer -= TilesSize;
         	if(walkUp==false) {
         		spritePersonaggio.setImage(walk_up_2);
         		walkUp=true;
@@ -51,9 +68,20 @@ public class Personaggio {
         		spritePersonaggio.setImage(walk_up_1);
         		walkUp=false;
         	}
+        	HoAttaccato=false;
         }
         if (e.getText().equals("s")) {
-            Yplayer += TilesSize;
+        	if(HoAttaccato==true) {
+	        	personaggio.setWidth(TilesSize);
+	        	spritePersonaggio.setFitWidth(TilesSize);
+	        	personaggio.setHeight(TilesSize);
+	            spritePersonaggio.setFitHeight(TilesSize);
+	            if(lastDirection=='a') {
+	            	Xplayer += TilesSize;
+	            }
+        	}
+        	lastDirection = 's';
+        	Yplayer += TilesSize;
             if(walkDown==false) {
             	walkDown=true;
         		spritePersonaggio.setImage(walk_down_2);
@@ -61,10 +89,21 @@ public class Personaggio {
         		walkDown=false;
         		spritePersonaggio.setImage(walk_down_1);
         	}
-            
+            HoAttaccato=false;
         }
         if (e.getText().equals("a")) {
-        	Xplayer += -TilesSize;
+        	if (HoAttaccato==true) {
+            	personaggio.setWidth(TilesSize);
+            	spritePersonaggio.setFitWidth(TilesSize);
+            	personaggio.setHeight(TilesSize);
+                spritePersonaggio.setFitHeight(TilesSize);
+                Xplayer += TilesSize;
+                if(lastDirection=='w') {
+                	Yplayer +=TilesSize;
+                }
+        	}
+        	lastDirection = 'a';
+        	Xplayer -= TilesSize;
         	if(walkLeft==false) {
         		spritePersonaggio.setImage(walk_left_2);
         		walkLeft=true;
@@ -72,8 +111,19 @@ public class Personaggio {
         		walkLeft=false;
         		spritePersonaggio.setImage(walk_left_1);
         	}
+        	HoAttaccato=false;
         }
         if (e.getText().equals("d")) {
+        	if (HoAttaccato==true) {
+        		personaggio.setWidth(TilesSize);
+            	spritePersonaggio.setFitWidth(TilesSize);
+            	personaggio.setHeight(TilesSize);
+                spritePersonaggio.setFitHeight(TilesSize);
+                if(lastDirection=='w') {
+                	Yplayer += TilesSize;
+                }
+        	}
+        	lastDirection = 'd';
             Xplayer += TilesSize;
             if(walkRigth==false) {
         		spritePersonaggio.setImage(walk_right_2);
@@ -82,65 +132,38 @@ public class Personaggio {
         		spritePersonaggio.setImage(walk_right_1);
         		walkRigth=false;
         	}
-        }
-
-        // Controlla i bordi e limita il movimento all'interno dell'area di gioco
-        if (Xplayer >= 0 && Xplayer + personaggio.getWidth() <= maxWidth) {
-            personaggio.setX(Xplayer);
-            spritePersonaggio.setX(Xplayer);
-        }
-        if (Yplayer >= 0 && Yplayer + personaggio.getHeight() <= maxHeight) {
-            personaggio.setY(Yplayer);
-            spritePersonaggio.setY(Yplayer);
-        }
-    }
-    public void attacca(MouseEvent e) {
-        double deltaX = 0;
-        double deltaY = 0;
-        double Xplayer = personaggio.getX();
-        double Yplayer = personaggio.getY();
-        if (e.getText().equals("w")) {
-        	Yplayer +=  -TilesSize;
-        	if(walkUp==false) {
-        		spritePersonaggio.setImage(walk_up_2);
-        		walkUp=true;
-        	}else {
-        		spritePersonaggio.setImage(walk_up_1);
-        		walkUp=false;
-        	}
-        }
-        if (e.getText().equals("s")) {
-            Yplayer += TilesSize;
-            if(walkDown==false) {
-            	walkDown=true;
-        		spritePersonaggio.setImage(walk_down_2);
-        	}else {
-        		walkDown=false;
-        		spritePersonaggio.setImage(walk_down_1);
-        	}
+            HoAttaccato=false;
             
         }
-        if (e.getText().equals("a")) {
-        	Xplayer += -TilesSize;
-        	if(walkLeft==false) {
-        		spritePersonaggio.setImage(walk_left_2);
-        		walkLeft=true;
-        	}else {
-        		walkLeft=false;
-        		spritePersonaggio.setImage(walk_left_1);
+        if (e.getCode() == KeyCode.ENTER){
+        	HoAttaccato=true;
+        	if(lastDirection == 'w') {
+        		Yplayer -=TilesSize;
+        		personaggio.setHeight(2*TilesSize);
+        		spritePersonaggio.setFitHeight(TilesSize*2);
+        		spritePersonaggio.setImage(attack_up_1);
+        		spritePersonaggio.setImage(attack_up_2);
+        	}
+        	if(lastDirection == 's') {
+        		personaggio.setHeight(2*TilesSize);
+        		spritePersonaggio.setFitHeight(TilesSize*2);
+        		spritePersonaggio.setImage(attack_down_1);
+        		spritePersonaggio.setImage(attack_down_2);
+        	}
+        	if(lastDirection == 'a') {
+        		Xplayer -= TilesSize;
+        		personaggio.setWidth(TilesSize*2);
+        		spritePersonaggio.setFitWidth(TilesSize*2);
+        		spritePersonaggio.setImage(attack_left_2);
+        	}
+        	if(lastDirection == 'd') {
+        		
+        		personaggio.setWidth(TilesSize*2);
+        		spritePersonaggio.setFitWidth(TilesSize*2);
+        		spritePersonaggio.setImage(attack_right_2);
         	}
         }
-        if (e.getText().equals("d")) {
-            Xplayer += TilesSize;
-            if(walkRigth==false) {
-        		spritePersonaggio.setImage(walk_right_2);
-        		walkRigth=true;
-        	}else {
-        		spritePersonaggio.setImage(walk_right_1);
-        		walkRigth=false;
-        	}
-        }
-
+        
         // Controlla i bordi e limita il movimento all'interno dell'area di gioco
         if (Xplayer >= 0 && Xplayer + personaggio.getWidth() <= maxWidth) {
             personaggio.setX(Xplayer);
