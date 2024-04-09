@@ -3,12 +3,13 @@ package it.edu.iisguiio;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.geometry.Bounds;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -17,7 +18,7 @@ import javafx.util.Duration;
 
 public class Zelda extends Application {
     Timeline timelineGioco = new Timeline(new KeyFrame(
-            Duration.seconds(0.16), // ogni quanto va chiamata la funzione
+            Duration.seconds(0.35), // ogni quanto va chiamata la funzione
             x -> aggiornaGioco()));
     //dimensione schermo i tiles del gioco
     int defaultTileSize = 16;
@@ -41,6 +42,7 @@ public class Zelda extends Application {
     Image spriteImage = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_down_1.png"));
     // classe 
     Personaggio richiamaPersonaggio; 
+    boolean StoAttaccando=false;
     Mostro mostro = new Mostro(mostro1, WIDTH_GIOCO, HEIGHT_GIOCO, TilesSize,percorsoX, percorsoY);
     // creo i pane per il gioco e il munù
     Pane gameMenù= new Pane();
@@ -72,7 +74,7 @@ public class Zelda extends Application {
         gameWord.getChildren().addAll(personaggio, spritePersonaggio);
         
         // Inizializza il gestore del personaggio
-        richiamaPersonaggio = new Personaggio(personaggio, WIDTH_GIOCO, HEIGHT_GIOCO, spritePersonaggio, TilesSize);
+        richiamaPersonaggio = new Personaggio(personaggio, WIDTH_GIOCO, HEIGHT_GIOCO, spritePersonaggio, TilesSize,StoAttaccando);
         
         //posizione il mostro
         mostro1.setFill(Color.RED); // Colore rosso per il mostro (puoi cambiarlo a tuo piacimento)
@@ -83,8 +85,9 @@ public class Zelda extends Application {
 
         
         scene.setOnKeyPressed(this::premiTasto);
-
-        timelineGioco.play();
+        
+        //permette di richiamare la funzione all'inizio
+        AvviaMenù();
     }
     
     public void premiTasto(KeyEvent e) {
@@ -95,11 +98,38 @@ public class Zelda extends Application {
         }
     } 
     public void AvviaMenù() {
+    	Button bStart = new Button("inizia la tua avventura");
+    	bStart.setPrefSize(4*TilesSize, TilesSize);
+    	bStart.setLayoutX(WIDTH_GIOCO/2-TilesSize*2);
+    	bStart.setLayoutY(HEIGHT_GIOCO/2-TilesSize);
+    	Button bComandi = new Button("comandi");
+    	bComandi.setPrefSize(4*TilesSize, TilesSize);
+    	bComandi.setLayoutX(WIDTH_GIOCO/2-TilesSize*2);
+    	bComandi.setLayoutY(HEIGHT_GIOCO/2);
+    	gameMenù.getChildren().addAll(bComandi , bStart);
+    	gameWord.getChildren().add(gameMenù);
+    	gameMenù.setBackground(null);
     	
+    	bStart.setOnAction(start ->iniziaAvventura());
+    	bComandi.setOnAction(e-> mostraComandi());
+    }
+    public void iniziaAvventura() {
+    	timelineGioco.play();
+    	gameMenù.getChildren().clear();
+    }
+    public void mostraComandi() {
+    	Pane paneComandi = new Pane();
+    	paneComandi.getChildren().clear();
     }
     public void aggiornaGioco() {
+        // Muovi il mostro
         mostro.muoviMostro();
+        // Verifica la collisione tra il personaggio e il mostro
+        if (personaggio.getBoundsInParent().intersects(mostro1.getBoundsInParent())) {
+        	if (StoAttaccando==true);
+        		timelineGioco.stop();
+        		gameWord.getChildren().remove(mostro);
+        }
     }
 
 }
-

@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Mostro {
-    private Rectangle mostro;
+    public Rectangle mostro;
     private double maxWidth;
     private double maxHeight;
     private int tileSize; // Valore del tile

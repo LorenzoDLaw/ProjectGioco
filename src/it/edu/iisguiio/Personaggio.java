@@ -19,12 +19,13 @@ public class Personaggio {
     boolean walkRigth = true;
     char lastDirection = 'w';
     boolean HoAttaccato = false;
-    public Personaggio(Rectangle personaggio, double maxWidth, double maxHeight, ImageView spritePersonaggio, double TilesSize) {
+    public Personaggio(Rectangle personaggio, double maxWidth, double maxHeight, ImageView spritePersonaggio, double TilesSize, boolean StoAttccando) {
         this.personaggio = personaggio;
         this.maxWidth = maxWidth;
         this.maxHeight = maxHeight;
         this.spritePersonaggio = spritePersonaggio;
         this.TilesSize = TilesSize;
+        this.HoAttaccato = StoAttccando;
         // Imposta il colore di riempimento trasparente
         personaggio.setFill(Color.TRANSPARENT);
         // Imposta il colore del contorno trasparente
