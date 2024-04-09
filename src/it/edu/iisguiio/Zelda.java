@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -18,9 +19,6 @@ public class Zelda extends Application {
     Timeline timelineGioco = new Timeline(new KeyFrame(
             Duration.seconds(0.16), // ogni quanto va chiamata la funzione
             x -> aggiornaGioco()));
-    Timeline timelineMenù = new Timeline(new KeyFrame(
-            Duration.seconds(0.16), // ogni quanto va chiamata la funzione
-            x -> aggiornaMenù()));
     //dimensione schermo i tiles del gioco
     int defaultTileSize = 16;
     int scale = 3;
@@ -44,22 +42,23 @@ public class Zelda extends Application {
     // classe 
     Personaggio richiamaPersonaggio; 
     Mostro mostro = new Mostro(mostro1, WIDTH_GIOCO, HEIGHT_GIOCO, TilesSize,percorsoX, percorsoY);
-    
+    // creo i pane per il gioco e il munù
+    Pane gameMenù= new Pane();
+    Pane gameWord = new Pane();
     public static void main(String args[]) {
         launch(args);
     }
 
     public void start(Stage primaryStage) throws Exception {
         // Creo la griglia
-        Pane gameWord = new Pane();
-        gameWord.setPrefSize(WIDTH_GIOCO, HEIGHT_GIOCO);
+        gameMenù.setPrefSize(WIDTH_GIOCO, HEIGHT_GIOCO);
+    	gameWord.setPrefSize(WIDTH_GIOCO, HEIGHT_GIOCO);
         Scene scene = new Scene(gameWord);
 
         primaryStage.setScene(scene);
         primaryStage.show();
 
         timelineGioco.setCycleCount(Timeline.INDEFINITE);
-        timelineMenù.setCycleCount(Timeline.INDEFINITE);
 
         // Carica l'immagine dello sprite del personaggio
         spritePersonaggio = new ImageView(spriteImage); 
@@ -86,19 +85,19 @@ public class Zelda extends Application {
         scene.setOnKeyPressed(this::premiTasto);
 
         timelineGioco.play();
-        timelineMenù.play();
     }
     
     public void premiTasto(KeyEvent e) {
         richiamaPersonaggio.muovi(e);
+        if(e.getCode()==KeyCode.ESCAPE) {
+        	timelineGioco.stop();
+        	AvviaMenù();
+        }
+    } 
+    public void AvviaMenù() {
+    	
     }
-
-
     public void aggiornaGioco() {
         mostro.muoviMostro();
-    }
-
-    public void aggiornaMenù() {
-        // Update menù logic
     }
 }

@@ -29,7 +29,6 @@ public class Personaggio {
         personaggio.setFill(Color.TRANSPARENT);
         // Imposta il colore del contorno trasparente
         personaggio.setStroke(Color.TRANSPARENT);
-
     }
     Image walk_down_1 = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_down_1.png"));
     Image walk_down_2 = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_down_2.png"));
