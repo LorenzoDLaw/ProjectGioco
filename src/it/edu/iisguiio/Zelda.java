@@ -13,9 +13,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.LineTo;
 
 public class Zelda extends Application {
     Timeline timelineGioco = new Timeline(new KeyFrame(
@@ -39,15 +36,11 @@ public class Zelda extends Application {
     Rectangle personaggio = new Rectangle(Xpersonaggio,Ypersonaggio,TilesSize,TilesSize);
     Rectangle mostro1= new Rectangle(TilesSize,TilesSize);
     //percorso del mostro
-    double[] percorsoX = {100, 150, 200, 250, 300}; 
-    double[] percorsoY = {100, 120, 100, 80, 100};
-    
-    
-    
-
+    double[] percorsoX = {2, 3, 3, 4, 5,5,5}; 
+    double[] percorsoY = {2, 2, 2, 2, 2,3,4};
     // ImageView per lo sprite del personaggio
     ImageView spritePersonaggio;
-    Image spriteImage = new Image(getClass().getResourceAsStream("link.png"));
+    Image spriteImage = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_down_1.png"));
     // classe 
     Personaggio richiamaPersonaggio; 
     Mostro mostro = new Mostro(mostro1, WIDTH_GIOCO, HEIGHT_GIOCO, TilesSize,percorsoX, percorsoY);
@@ -57,8 +50,6 @@ public class Zelda extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
-    	
-
         // Creo la griglia
         Pane gameWord = new Pane();
         gameWord.setPrefSize(WIDTH_GIOCO, HEIGHT_GIOCO);
@@ -93,45 +84,21 @@ public class Zelda extends Application {
 
         
         scene.setOnKeyPressed(this::premiTasto);
-        scene.setOnMousePressed(this::premiMouse);
 
         timelineGioco.play();
         timelineMenù.play();
-        
-    	Path pathMostro = new Path();
-    	pathMostro.getElements().add(new MoveTo(percorsoX[0], percorsoY[0])); // Posizione iniziale del percorso
-
-    	// Aggiungi i segmenti del percorso
-    	for (int i = 1; i < percorsoX.length; i++) {
-    	    pathMostro.getElements().add(new LineTo(percorsoX[i], percorsoY[i]));
-    	}
-
-    	// Opzionale: chiudi il percorso
-    	// pathMostro.getElements().add(new ClosePath());
-
-    	// Imposta il percorso del mostro
-    	mostro1.setX(percorsoX[0]); // Posizione iniziale del mostro
-    	mostro1.setY(percorsoY[0]);
-
-    	// Aggiungi il percorso al gioco
-    	gameWord.getChildren().add(pathMostro);
     }
     
     public void premiTasto(KeyEvent e) {
         richiamaPersonaggio.muovi(e);
     }
 
-    public void premiMouse(MouseEvent e) {
-        if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
-           
-        }
-    }
 
     public void aggiornaGioco() {
         mostro.muoviMostro();
     }
 
     public void aggiornaMenù() {
- 
+        // Update menù logic
     }
 }
