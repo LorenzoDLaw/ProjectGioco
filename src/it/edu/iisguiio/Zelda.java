@@ -100,4 +100,6 @@ public class Zelda extends Application {
     public void aggiornaGioco() {
         mostro.muoviMostro();
     }
+
 }
+
