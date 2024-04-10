@@ -19,17 +19,16 @@ public class Personaggio {
     boolean walkRigth = true;
     char lastDirection = 'w';
     boolean HoAttaccato = false;
-    public Personaggio(Rectangle personaggio, double maxWidth, double maxHeight, ImageView spritePersonaggio, double TilesSize, boolean StoAttccando) {
+    public Personaggio(Rectangle personaggio, double maxWidth, double maxHeight, ImageView spritePersonaggio, double TilesSize) {
         this.personaggio = personaggio;
         this.maxWidth = maxWidth;
         this.maxHeight = maxHeight;
         this.spritePersonaggio = spritePersonaggio;
-        this.TilesSize = TilesSize;
-        this.HoAttaccato = StoAttccando;
+        this.TilesSize = TilesSize;;
         // Imposta il colore di riempimento trasparente
-        personaggio.setFill(Color.TRANSPARENT);
+        //personaggio.setFill(Color.TRANSPARENT);
         // Imposta il colore del contorno trasparente
-        personaggio.setStroke(Color.TRANSPARENT);
+        //personaggio.setStroke(Color.TRANSPARENT);
     }
     Image walk_down_1 = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_down_1.png"));
     Image walk_down_2 = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_down_2.png"));
@@ -139,13 +138,13 @@ public class Personaggio {
         	HoAttaccato=true;
         	if(lastDirection == 'w') {
         		Yplayer -=TilesSize;
-        		personaggio.setHeight(2*TilesSize);
+        		personaggio.setHeight(TilesSize*2);
         		spritePersonaggio.setFitHeight(TilesSize*2);
         		spritePersonaggio.setImage(attack_up_1);
         		spritePersonaggio.setImage(attack_up_2);
         	}
         	if(lastDirection == 's') {
-        		personaggio.setHeight(2*TilesSize);
+        		personaggio.setHeight(TilesSize*2);
         		spritePersonaggio.setFitHeight(TilesSize*2);
         		spritePersonaggio.setImage(attack_down_1);
         		spritePersonaggio.setImage(attack_down_2);
