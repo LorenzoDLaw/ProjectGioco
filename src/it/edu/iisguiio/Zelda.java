@@ -6,10 +6,12 @@ import javafx.application.Application;
 import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -43,6 +45,7 @@ public class Zelda extends Application {
     Image spriteImage = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_down_1.png"));
     // classe 
     Personaggio richiamaPersonaggio; 
+    int VitaPersonaggio;
     Mostro mostro = new Mostro(mostro1, WIDTH_GIOCO, HEIGHT_GIOCO, TilesSize,percorsoX, percorsoY);
     // creo i pane per il gioco e il munù
     Pane paneMenù= new Pane();
@@ -53,7 +56,7 @@ public class Zelda extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
-    	richiamaPersonaggio.HoAttaccato = false;
+    	VitaPersonaggio=3;
         // Creo la griglia
         paneMenù.setPrefSize(WIDTH_GIOCO, HEIGHT_GIOCO);
     	paneWord.setPrefSize(WIDTH_GIOCO, HEIGHT_GIOCO);
@@ -85,7 +88,6 @@ public class Zelda extends Application {
         // Aggiungi il mostro al gioco
         paneWord.getChildren().add(mostro1);
 
-        
         scene.setOnKeyPressed(this::premiTasto);
         
         //permette di richiamare la funzione all'inizio
@@ -123,10 +125,23 @@ public class Zelda extends Application {
     	paneMenù.getChildren().clear();
     }
     public void mostraComandi() {
+    	GridPane grigliaMenù = new GridPane();
+    	grigliaMenù.setPrefSize(TilesSize*4, TilesSize*2);
+    	Label lMovimentoSù = new Label("W : movimento su");
+    	Label lMovimentoGiù = new Label("S : movimento giù");
+    	Label lMovimentoDestra = new Label("D : movimento a destra");
+    	Label lMovimentoSinistra = new Label("D : movimento a sinistra");
+    	Label lAttacco = new Label("ENTER : attacco");
     	
-    	paneComandi.getChildren().add(bStart);
-    	bStart.setLayoutX(WIDTH_GIOCO/2-TilesSize*2);
-    	bStart.setLayoutY(HEIGHT_GIOCO-2*TilesSize);
+    	grigliaMenù.add(lMovimentoSù, 0, 0);
+    	grigliaMenù.add(lMovimentoGiù, 0, 1);
+    	grigliaMenù.add(lMovimentoDestra, 0, 2);
+    	grigliaMenù.add(lMovimentoSinistra, 0, 3);
+    	grigliaMenù.add(lAttacco, 0, 4);
+    	grigliaMenù.add(bStart, 0, 5);
+    	paneComandi.getChildren().add(grigliaMenù);
+    	grigliaMenù.setLayoutX(TilesSize*6);
+    	grigliaMenù.setLayoutY(TilesSize*4);
     	paneMenù.getChildren().clear();
     	paneWord.getChildren().add(paneComandi);
     	//paneComandi.getChildren().clear();
@@ -137,9 +152,17 @@ public class Zelda extends Application {
         Shape intersect = Shape.intersect(personaggio, mostro1);
         // Verifica la collisione tra il personaggio e il mostro
         if(intersect.getBoundsInLocal().getWidth() != -1) {
-        	if ();
+        	if (richiamaPersonaggio.HoAttaccato==true) {
         		timelineGioco.stop();
-        		//paneWord.getChildren().remove(mostro1);
+        		paneWord.getChildren().remove(mostro1);
+        	}else {
+        		if (VitaPersonaggio==0) {
+        			paneWord.getChildren().removeAll(personaggio, spritePersonaggio);
+        		}else {
+        			VitaPersonaggio--;
+        		}	
+        	}
+        		
         }
     }
 

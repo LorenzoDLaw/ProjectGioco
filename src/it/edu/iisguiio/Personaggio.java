@@ -26,9 +26,9 @@ public class Personaggio {
         this.spritePersonaggio = spritePersonaggio;
         this.TilesSize = TilesSize;;
         // Imposta il colore di riempimento trasparente
-        //personaggio.setFill(Color.TRANSPARENT);
+        personaggio.setFill(Color.TRANSPARENT);
         // Imposta il colore del contorno trasparente
-        //personaggio.setStroke(Color.TRANSPARENT);
+        personaggio.setStroke(Color.TRANSPARENT);
     }
     Image walk_down_1 = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_down_1.png"));
     Image walk_down_2 = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_down_2.png"));
@@ -38,13 +38,9 @@ public class Personaggio {
     Image walk_left_2 = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_left_2.png"));
     Image walk_right_1 = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_right_1.png"));
     Image walk_right_2 = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_right_2.png"));
-    Image attack_down_1 = new Image(getClass().getResourceAsStream("Immagini/SpriteAttacco/attacco_down_1.png"));
     Image attack_down_2 = new Image(getClass().getResourceAsStream("Immagini/SpriteAttacco/attacco_down_2.png"));
-    Image attack_up_1 = new Image(getClass().getResourceAsStream("Immagini/SpriteAttacco/attacco_up_1.png"));
     Image attack_up_2 = new Image(getClass().getResourceAsStream("Immagini/SpriteAttacco/attacco_up_2.png"));
-    Image attack_left_1 = new Image(getClass().getResourceAsStream("Immagini/SpriteAttacco/attacco_left_1.png"));
     Image attack_left_2 = new Image(getClass().getResourceAsStream("Immagini/SpriteAttacco/attacco_left_2.png"));
-    Image attack_right_1 = new Image(getClass().getResourceAsStream("Immagini/SpriteAttacco/attacco_right_1.png"));
     Image attack_right_2 = new Image(getClass().getResourceAsStream("Immagini/SpriteAttacco/attacco_right_2.png"));
     
     public void muovi(KeyEvent e) {
@@ -140,13 +136,11 @@ public class Personaggio {
         		Yplayer -=TilesSize;
         		personaggio.setHeight(TilesSize*2);
         		spritePersonaggio.setFitHeight(TilesSize*2);
-        		spritePersonaggio.setImage(attack_up_1);
         		spritePersonaggio.setImage(attack_up_2);
         	}
         	if(lastDirection == 's') {
         		personaggio.setHeight(TilesSize*2);
         		spritePersonaggio.setFitHeight(TilesSize*2);
-        		spritePersonaggio.setImage(attack_down_1);
         		spritePersonaggio.setImage(attack_down_2);
         	}
         	if(lastDirection == 'a') {
