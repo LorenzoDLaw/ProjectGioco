@@ -1,9 +1,15 @@
 package it.edu.iisguiio;
 
+import java.io.IOException;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -55,7 +61,9 @@ public class Zelda extends Application {
         launch(args);
     }
 
+    Stage finestra;
     public void start(Stage primaryStage) throws Exception {
+    	finestra=primaryStage;
     	VitaPersonaggio=3;
         // Creo la griglia
         paneMenù.setPrefSize(WIDTH_GIOCO, HEIGHT_GIOCO);
@@ -125,26 +133,45 @@ public class Zelda extends Application {
     	paneMenù.getChildren().clear();
     }
     public void mostraComandi() {
-    	GridPane grigliaMenù = new GridPane();
-    	grigliaMenù.setPrefSize(TilesSize*4, TilesSize*2);
-    	Label lMovimentoSù = new Label("W : movimento su");
-    	Label lMovimentoGiù = new Label("S : movimento giù");
-    	Label lMovimentoDestra = new Label("D : movimento a destra");
-    	Label lMovimentoSinistra = new Label("D : movimento a sinistra");
-    	Label lAttacco = new Label("ENTER : attacco");
+    	try {
+			Scene scenaComadi = new Scene( FXMLLoader.load(Zelda.class.getResource("menuComandi.fxml")) );
+			 finestra.setScene(scenaComadi);
+		     finestra.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
-    	grigliaMenù.add(lMovimentoSù, 0, 0);
-    	grigliaMenù.add(lMovimentoGiù, 0, 1);
-    	grigliaMenù.add(lMovimentoDestra, 0, 2);
-    	grigliaMenù.add(lMovimentoSinistra, 0, 3);
-    	grigliaMenù.add(lAttacco, 0, 4);
-    	grigliaMenù.add(bStart, 0, 5);
+    	/*GridPane grigliaMenù = new GridPane();
+    	grigliaMenù.setPrefSize(TilesSize*6, TilesSize*10);
+    	Button bMovSu= new Button("W");bMovSu.setPrefWidth(TilesSize*2);
+    	Label lMovimentoSù = new Label("movimento su"); lMovimentoSù.setPrefWidth(TilesSize*4);
+    	Button bMovGiu= new Button("S");bMovGiu.setPrefWidth(TilesSize*2);
+    	Label lMovimentoGiù = new Label("movimento giù"); lMovimentoGiù.setPrefWidth(TilesSize*4);
+    	Button bMovDestra= new Button("D");bMovDestra.setPrefWidth(TilesSize*2);
+    	Label lMovimentoDestra = new Label("movimento a destra");lMovimentoDestra.setPrefWidth(TilesSize*4);
+    	Button bMovSinistra= new Button("A");bMovSinistra.setPrefWidth(TilesSize*2);
+    	Label lMovimentoSinistra = new Label("movimento a sinistra"); lMovimentoSinistra.setPrefWidth(TilesSize*4);
+    	Button bAttacco= new Button("ENTER"); bAttacco.setPrefWidth(TilesSize*2);
+    	Label lAttacco = new Label("attacco");lMovimentoSù.setPrefHeight(TilesSize/2);
+    	grigliaMenù.setPadding(new Insets(20, 20, 20, 20));
+    	grigliaMenù.add(bMovSu, 0, 0);
+    	grigliaMenù.add(lMovimentoSù, 1, 0);
+    	grigliaMenù.add(bMovGiu, 0, 1);
+    	grigliaMenù.add(lMovimentoGiù, 1, 1);
+    	grigliaMenù.add(bMovDestra, 0, 2);
+    	grigliaMenù.add(lMovimentoDestra, 1, 2);
+    	grigliaMenù.add(bMovSinistra, 0, 3); 
+    	grigliaMenù.add(lMovimentoSinistra, 1, 3);
+    	grigliaMenù.add(bAttacco, 0, 4);
+    	grigliaMenù.add(lAttacco, 1, 4);
+    	grigliaMenù.add(bStart, 0, 5,2,1);
     	paneComandi.getChildren().add(grigliaMenù);
     	grigliaMenù.setLayoutX(TilesSize*6);
     	grigliaMenù.setLayoutY(TilesSize*4);
     	paneMenù.getChildren().clear();
-    	paneWord.getChildren().add(paneComandi);
-    	//paneComandi.getChildren().clear();
+    	paneWord.getChildren().add(paneComandi);*/
+    	
     }
     public void aggiornaGioco(){
         // Muovi il mostro
@@ -164,6 +191,11 @@ public class Zelda extends Application {
         	}
         		
         }
+    }
+    
+    @FXML
+	private void attivaGioco(ActionEvent e){
+    	System.out.println("click!");
     }
 
 }
