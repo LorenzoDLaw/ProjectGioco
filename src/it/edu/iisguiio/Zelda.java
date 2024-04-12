@@ -49,10 +49,14 @@ public class Zelda extends Application {
     // ImageView per lo sprite del personaggio
     ImageView spritePersonaggio;
     Image spriteImage = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_down_1.png"));
+    //sprite del mostro
+    ImageView spriteMostro;
+    Image spriteImageMostro = new Image(getClass().getResourceAsStream("Immagini/Monster/skeletonlord_down_2.png"));
     // classe 
     Personaggio richiamaPersonaggio; 
+    Mostro richiamaMostro;
     int VitaPersonaggio;
-    Mostro mostro = new Mostro(mostro1, WIDTH_GIOCO, HEIGHT_GIOCO, TilesSize,percorsoX, percorsoY);
+    
     // creo i pane per il gioco e il munù
     Pane paneMenù= new Pane();
     Pane paneWord = new Pane();
@@ -76,25 +80,31 @@ public class Zelda extends Application {
         timelineGioco.setCycleCount(Timeline.INDEFINITE);
 
         // Carica l'immagine dello sprite del personaggio
-        spritePersonaggio = new ImageView(spriteImage); 
+        spritePersonaggio = new ImageView(spriteImage);
+        spriteMostro = new ImageView(spriteImageMostro);
         // Imposta la posizione iniziale dello sprite
         spritePersonaggio.setX(Xpersonaggio);
         spritePersonaggio.setY(Ypersonaggio);
-        // Imposta la dimensione dello sprite
+        // Imposta la dimensione dello sprite 
         spritePersonaggio.setFitWidth(TilesSize);
         spritePersonaggio.setFitHeight(TilesSize);
+        spriteMostro.setFitWidth(TilesSize);
+        spriteMostro.setFitHeight(TilesSize);
         // Aggiungi lo sprite al Pane del gioco
         paneWord.getChildren().addAll(personaggio, spritePersonaggio);
         
         // Inizializza il gestore del personaggio
         richiamaPersonaggio = new Personaggio(personaggio, WIDTH_GIOCO, HEIGHT_GIOCO, spritePersonaggio, TilesSize);
-        
+        richiamaMostro = new Mostro(mostro1, WIDTH_GIOCO, HEIGHT_GIOCO, TilesSize,percorsoX, percorsoY,spriteMostro);
         //posizione il mostro
         mostro1.setFill(Color.RED); // Colore rosso per il mostro (puoi cambiarlo a tuo piacimento)
+        mostro1.setStroke(Color.TRANSPARENT);
         mostro1.setX(WIDTH_GIOCO / 4); // Posizione iniziale del mostro
         mostro1.setY(HEIGHT_GIOCO / 4);
+        spriteMostro.setX(HEIGHT_GIOCO/4);
+        spriteMostro.setY(HEIGHT_GIOCO / 4);
         // Aggiungi il mostro al gioco
-        paneWord.getChildren().add(mostro1);
+        paneWord.getChildren().addAll(mostro1, spriteMostro);
 
         scene.setOnKeyPressed(this::premiTasto);
         
@@ -128,6 +138,7 @@ public class Zelda extends Application {
     	bComandi.setOnAction(e-> mostraComandi());
     }
     public void iniziaAvventura() {
+    	
     	timelineGioco.play();
     	paneComandi.getChildren().clear();
     	paneMenù.getChildren().clear();
@@ -142,40 +153,10 @@ public class Zelda extends Application {
 			e.printStackTrace();
 		}
     	
-    	/*GridPane grigliaMenù = new GridPane();
-    	grigliaMenù.setPrefSize(TilesSize*6, TilesSize*10);
-    	Button bMovSu= new Button("W");bMovSu.setPrefWidth(TilesSize*2);
-    	Label lMovimentoSù = new Label("movimento su"); lMovimentoSù.setPrefWidth(TilesSize*4);
-    	Button bMovGiu= new Button("S");bMovGiu.setPrefWidth(TilesSize*2);
-    	Label lMovimentoGiù = new Label("movimento giù"); lMovimentoGiù.setPrefWidth(TilesSize*4);
-    	Button bMovDestra= new Button("D");bMovDestra.setPrefWidth(TilesSize*2);
-    	Label lMovimentoDestra = new Label("movimento a destra");lMovimentoDestra.setPrefWidth(TilesSize*4);
-    	Button bMovSinistra= new Button("A");bMovSinistra.setPrefWidth(TilesSize*2);
-    	Label lMovimentoSinistra = new Label("movimento a sinistra"); lMovimentoSinistra.setPrefWidth(TilesSize*4);
-    	Button bAttacco= new Button("ENTER"); bAttacco.setPrefWidth(TilesSize*2);
-    	Label lAttacco = new Label("attacco");lMovimentoSù.setPrefHeight(TilesSize/2);
-    	grigliaMenù.setPadding(new Insets(20, 20, 20, 20));
-    	grigliaMenù.add(bMovSu, 0, 0);
-    	grigliaMenù.add(lMovimentoSù, 1, 0);
-    	grigliaMenù.add(bMovGiu, 0, 1);
-    	grigliaMenù.add(lMovimentoGiù, 1, 1);
-    	grigliaMenù.add(bMovDestra, 0, 2);
-    	grigliaMenù.add(lMovimentoDestra, 1, 2);
-    	grigliaMenù.add(bMovSinistra, 0, 3); 
-    	grigliaMenù.add(lMovimentoSinistra, 1, 3);
-    	grigliaMenù.add(bAttacco, 0, 4);
-    	grigliaMenù.add(lAttacco, 1, 4);
-    	grigliaMenù.add(bStart, 0, 5,2,1);
-    	paneComandi.getChildren().add(grigliaMenù);
-    	grigliaMenù.setLayoutX(TilesSize*6);
-    	grigliaMenù.setLayoutY(TilesSize*4);
-    	paneMenù.getChildren().clear();
-    	paneWord.getChildren().add(paneComandi);*/
-    	
     }
     public void aggiornaGioco(){
         // Muovi il mostro
-        mostro.muoviMostro();
+        richiamaMostro.muoviMostro();
         Shape intersect = Shape.intersect(personaggio, mostro1);
         // Verifica la collisione tra il personaggio e il mostro
         if(intersect.getBoundsInLocal().getWidth() != -1) {
