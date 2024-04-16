@@ -1,3 +1,4 @@
+
 package it.edu.iisguiio;
 
 import java.io.IOException;
@@ -30,19 +31,19 @@ public class Zelda extends Application {
     //dimensione schermo i tiles del gioco
     int defaultTileSize = 16;
     int scale = 3;
-    int TilesSize = defaultTileSize * scale;
+    int tilesSize = defaultTileSize * scale;
     int gameColoum = 16;
     int gameRow = 12;
-    final int WIDTH_GIOCO = gameColoum * TilesSize;
-    final int HEIGHT_GIOCO = gameRow * TilesSize;
-  //cordinate del personaggio
+    final int WIDTH_GIOCO = gameColoum * tilesSize;
+    final int HEIGHT_GIOCO = gameRow * tilesSize;
+    //cordinate del personaggio
     double Xpersonaggio=WIDTH_GIOCO/2;
-    double Ypersonaggio=HEIGHT_GIOCO-TilesSize;
+    double Ypersonaggio=HEIGHT_GIOCO-tilesSize;
     //personaggio e nemici come rettangoli
-    Rectangle personaggio = new Rectangle(Xpersonaggio,Ypersonaggio,TilesSize,TilesSize);
-    Rectangle rMostro1= new Rectangle(TilesSize,TilesSize);
-    Rectangle rMostro2 = new Rectangle(TilesSize,TilesSize);
-    Rectangle rMostro3 = new Rectangle(TilesSize,TilesSize);
+    Rectangle personaggio = new Rectangle(Xpersonaggio,Ypersonaggio,tilesSize,tilesSize);
+    Rectangle rMostro1= new Rectangle(tilesSize,tilesSize);
+    Rectangle rMostro2 = new Rectangle(tilesSize,tilesSize);
+    Rectangle rMostro3 = new Rectangle(tilesSize,tilesSize);
     
     // ImageView per lo sprite del personaggio
     Image spriteImage = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_down_1.png"));
@@ -60,18 +61,28 @@ public class Zelda extends Application {
     Personaggio richiamaPersonaggio; 
     Mostro richiamaMostro;
     
-    int VitaPersonaggio=3;
-    int countMostri=1;
+    int vitaPersonaggio=3;
     // creo i pane per il gioco e il munù
     Pane paneMenù= new Pane();
     Pane paneWord = new Pane();
     Pane paneComandi = new Pane();
+    
+    //fasi del gioco
+    boolean fase1=true;
+    boolean fase2=false;
+    boolean fase3=false;
+    //mostri eliminati
+    boolean mostro1Eliminato=false;
+    boolean mostro2Eliminato=false;
+    boolean mostro3Eliminato=false;
     public static void main(String args[]) {
         launch(args);
     }
 
     Stage finestra;
     public void start(Stage primaryStage) throws Exception {
+    	System.out.println("withd"+WIDTH_GIOCO);
+    	System.out.println("he"+HEIGHT_GIOCO);
     	finestra=primaryStage;;
         // Creo la griglia
         paneMenù.setPrefSize(WIDTH_GIOCO, HEIGHT_GIOCO);
@@ -102,20 +113,20 @@ public class Zelda extends Application {
         spritePersonaggio.setY(Ypersonaggio);
         
         // Imposta la dimensione degli sprite 
-        spritePersonaggio.setFitWidth(TilesSize);
-        spritePersonaggio.setFitHeight(TilesSize);
-        spriteMostro.setFitWidth(TilesSize);
-        spriteMostro.setFitHeight(TilesSize);
-        spriteMostro2.setFitWidth(TilesSize);
-        spriteMostro2.setFitHeight(TilesSize);
-        spriteMostro3.setFitWidth(TilesSize);
-        spriteMostro3.setFitHeight(TilesSize);
+        spritePersonaggio.setFitWidth(tilesSize);
+        spritePersonaggio.setFitHeight(tilesSize);
+        spriteMostro.setFitWidth(tilesSize);
+        spriteMostro.setFitHeight(tilesSize);
+        spriteMostro2.setFitWidth(tilesSize);
+        spriteMostro2.setFitHeight(tilesSize);
+        spriteMostro3.setFitWidth(tilesSize);
+        spriteMostro3.setFitHeight(tilesSize);
         // Aggiungi lo sprite al Pane del gioco
         paneWord.getChildren().addAll(personaggio, spritePersonaggio);
         
         // Inizializza il gestore del personaggio
-        richiamaPersonaggio = new Personaggio(personaggio, WIDTH_GIOCO, HEIGHT_GIOCO, spritePersonaggio, TilesSize);
-        richiamaMostro = new Mostro(rMostro1, rMostro2, rMostro3, WIDTH_GIOCO, HEIGHT_GIOCO, TilesSize, spriteMostro, spriteMostro2, spriteMostro3);
+        richiamaPersonaggio = new Personaggio(personaggio, WIDTH_GIOCO, HEIGHT_GIOCO, spritePersonaggio, tilesSize);
+        richiamaMostro = new Mostro(rMostro1, rMostro2, rMostro3, WIDTH_GIOCO, HEIGHT_GIOCO, tilesSize, spriteMostro, spriteMostro2, spriteMostro3);
         //posizione il mostro e do un colore al rettangolo
         rMostro1.setFill(Color.TRANSPARENT); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
         rMostro1.setStroke(Color.TRANSPARENT);
@@ -133,24 +144,22 @@ public class Zelda extends Application {
     }
     
     public void premiTasto(KeyEvent e) {
-        //if(timelineGioco.getStatus()==Status.RUNNING) {
         	richiamaPersonaggio.muovi(e);
             if(e.getCode()==KeyCode.ESCAPE) {
             	timelineGioco.stop();
             	AvviaMenù();
-            }
-        //}    	
+            }   	
     } 
     Button bStart = new Button("inizia la tua avventura");
     Button bComandi= new Button("comandi");
     
     public void AvviaMenù() {
-    	bStart.setPrefSize(4*TilesSize, TilesSize);
-    	bStart.setLayoutX(WIDTH_GIOCO/2-TilesSize*2);
-    	bStart.setLayoutY(HEIGHT_GIOCO/2-TilesSize);
+    	bStart.setPrefSize(4*tilesSize, tilesSize);
+    	bStart.setLayoutX(WIDTH_GIOCO/2-tilesSize*2);
+    	bStart.setLayoutY(HEIGHT_GIOCO/2-tilesSize);
     	//Button bComandi = new Button("comandi");
-    	bComandi.setPrefSize(4*TilesSize, TilesSize);
-    	bComandi.setLayoutX(WIDTH_GIOCO/2-TilesSize*2);
+    	bComandi.setPrefSize(4*tilesSize, tilesSize);
+    	bComandi.setLayoutX(WIDTH_GIOCO/2-tilesSize*2);
     	bComandi.setLayoutY(HEIGHT_GIOCO/2);
     	paneMenù.getChildren().addAll(bComandi , bStart);
     	paneWord.getChildren().add(paneMenù);
@@ -183,33 +192,32 @@ public class Zelda extends Application {
         Shape intersect1 = Shape.intersect(personaggio, rMostro1);
         Shape intersect2 = Shape.intersect(personaggio, rMostro2);
         Shape intersect3 = Shape.intersect(personaggio, rMostro2);
-        boolean mostro1Eliminato=false;
-        boolean mostro2Eliminato=false;
-        boolean mostro3Eliminato=false;
+       
+       
+       
         // Verifica la collisione tra il personaggio e il primo mostro
         if(intersect1.getBoundsInLocal().getWidth() != -1) {
             if (richiamaPersonaggio.HoAttaccato==true) {
                 paneWord.getChildren().removeAll(spriteMostro,rMostro1);
+                //System.out.println("tolti spriteMostro,rMostro1");
                 mostro1Eliminato=true;
-                countMostri++;
             } else {
-                if (VitaPersonaggio == 0) {
-                    paneWord.getChildren().removeAll(personaggio, spritePersonaggio);
+                if (vitaPersonaggio == 0) {
+                    //paneWord.getChildren().removeAll(personaggio, spritePersonaggio);
                 } else {
-                    VitaPersonaggio--;
+                    vitaPersonaggio--;
                 }   
             }      
         }
         if(intersect2.getBoundsInLocal().getWidth() != -1) {
         	if (richiamaPersonaggio.HoAttaccato==true) {
                 paneWord.getChildren().removeAll(spriteMostro2,rMostro2);
-                countMostri++;
                 mostro2Eliminato=true;
             } else {
-                if (VitaPersonaggio == 0) {
-                    paneWord.getChildren().removeAll(personaggio, spritePersonaggio);
+                if (vitaPersonaggio == 0) {
+                   // paneWord.getChildren().removeAll(personaggio, spritePersonaggio);
                 } else {
-                    VitaPersonaggio--;
+                    vitaPersonaggio--;
                 }   
             }
         }
@@ -218,60 +226,102 @@ public class Zelda extends Application {
                 paneWord.getChildren().removeAll(spriteMostro3,rMostro3);
                 mostro3Eliminato=true;
             } else {
-                if (VitaPersonaggio == 0) {
-                    paneWord.getChildren().removeAll(personaggio, spritePersonaggio);
+                if (vitaPersonaggio == 0) {
+                    //paneWord.getChildren().removeAll(personaggio, spritePersonaggio);
                 } else {
-                    VitaPersonaggio--;
+                    vitaPersonaggio--;
                 }   
             }
         }
-        if(countMostri==2 && mostro1Eliminato==true) {
-        	mostro1Eliminato=false;
+        if( fase1==true && mostro1Eliminato==true) {
+        	System.out.println("fase1=true");
+        	fase1=false;
+        	fase2=true;
         	aggiungiMostro();
         }
-        if(countMostri==3 && mostro1Eliminato==true && mostro2Eliminato==true) {
-        	mostro1Eliminato=false; 
-        	mostro2Eliminato=false;
+        if( fase2==true && mostro1Eliminato==true && mostro2Eliminato==true) {
+        	System.out.println("fase2");
+        	fase2=false;
+        	System.out.println("fase2=false");
+        	fase3=true;
+        	System.out.println("fase3=true");
         	aggiungiMostro();
         } 
-        if(countMostri>=4 && mostro1Eliminato==true && mostro2Eliminato==true && mostro3Eliminato==true) {
-        	mostro1Eliminato=false; 
-        	mostro2Eliminato=false;
-        	mostro3Eliminato=false; 
+        if(fase3==true && mostro1Eliminato==true && mostro2Eliminato==true && mostro3Eliminato==true) {
         	aggiungiMostro();
         } 
     }
 
     // Funzione per aggiungere un nuovo mostro se necessario
     private void aggiungiMostro() {
-        if (countMostri ==2) {
-        	int posX = (int) Math.random()*gameColoum;
-        	int posY = (int) Math.random()*gameRow;
-        	//posizione il mostro e do un colore al rettangolo
-            rMostro2.setFill(Color.RED); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
-            rMostro2.setStroke(Color.RED);
-            rMostro2.setX(posX*TilesSize); // Posizione iniziale del mostro
-            rMostro2.setY(posY*TilesSize);
-            spriteMostro2.setX(posX*TilesSize);
-            spriteMostro2.setY(posY*TilesSize);
-        	paneWord.getChildren().addAll(spriteMostro, rMostro1, spriteMostro2, rMostro2);
-            countMostri++;
+    	mostro1Eliminato=false; 
+    	mostro2Eliminato=false;
+    	mostro3Eliminato=false;
+    	if (fase2==true) {
+        	//System.out.println("fase 2");        	
+        	int posXM1 = (int) (Math.random()*(gameColoum+1))*tilesSize;
+        	System.out.println(posXM1);
+        	int posYM1 = (int) (Math.random()*(gameRow+1))*tilesSize;
+        	System.out.println(posYM1);
+        	int posXM2 = (int) (Math.random()*(gameColoum+1))*tilesSize;
+        	System.out.println(posXM2);
+        	int posYM2 = (int) (Math.random()*(gameRow+1))*tilesSize;
+        	System.out.println(posYM2);
+            //genero il mostro uno in una posizione casuale
+            rMostro1.setX(posXM1); 
+            rMostro1.setY(posYM1);
+            spriteMostro.setX(posYM1);
+            spriteMostro.setY(posYM1);
+            
+            //posizione il mostro e do un colore al rettangolo
+            rMostro2.setFill(Color.TRANSPARENT); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
+            rMostro2.setStroke(Color.TRANSPARENT);
+            rMostro2.setX(posXM2*tilesSize); // Posizione iniziale del mostro
+            rMostro2.setY(posYM2*tilesSize);
+            spriteMostro2.setX(posYM2*tilesSize);
+            spriteMostro2.setY(posYM2*tilesSize);
+        	//paneWord.getChildren().addAll(spriteMostro, rMostro1, spriteMostro2, rMostro2);
+            paneWord.getChildren().addAll(rMostro1);
+        	paneWord.getChildren().addAll(spriteMostro);
+        	paneWord.getChildren().addAll(rMostro2);
+        	paneWord.getChildren().addAll(spriteMostro2);
             richiamaMostro.muoviMostro();
-            //timelineGioco.play();
-        }
-        if(countMostri==3) {
-        	int posX = (int) Math.random()*gameColoum;
-        	int posY = (int) Math.random()*gameRow;
-        	//posizione il mostro e do un colore al rettangolo
-            rMostro3.setFill(Color.RED); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
-            rMostro3.setStroke(Color.RED);
-            rMostro3.setX(posX*TilesSize); // Posizione iniziale del mostro
-            rMostro3.setY(posY*TilesSize);
-            spriteMostro3.setX(posX*TilesSize);
-            spriteMostro3.setY(posY*TilesSize);
-        	paneWord.getChildren().addAll(spriteMostro,rMostro1,spriteMostro2, rMostro2,spriteMostro3, rMostro3);
-        	richiamaMostro.muoviMostro();
-        	//timelineGioco.play();
+        }else {
+        	if(fase3==true) {        		
+            	int posXM1 = (int) (Math.random()*(gameColoum+1))*tilesSize;
+            	int posYM1 = (int) (Math.random()*(gameRow+1))*tilesSize;
+            	int posXM2 = (int) (Math.random()*(gameColoum+1))*tilesSize;
+            	int posYM2 = (int) (Math.random()*(gameRow+1))*tilesSize;
+            	int posXM3 = (int) (Math.random()*(gameColoum+1))*tilesSize;
+            	int posYM3 = (int) (Math.random()*(gameRow+1))*tilesSize;
+            	//posizione il mostro 1
+            	rMostro1.setX(posXM1);
+                rMostro1.setY(posYM1);
+                spriteMostro.setX(posYM1);
+                spriteMostro.setY(posYM1);
+
+                //posiziono il mostro 2
+            	rMostro2.setX(posXM2); 
+                rMostro2.setY(posYM2);
+                spriteMostro2.setX(posYM2);
+                spriteMostro2.setY(posYM2);
+            	
+                //posizione il mostro 3
+            	rMostro3.setFill(Color.TRANSPARENT); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
+                rMostro3.setStroke(Color.TRANSPARENT);
+                rMostro3.setX(posXM3); // Posizione iniziale del mostro
+                rMostro3.setY(posYM3);
+                spriteMostro3.setX(posXM3);
+                spriteMostro3.setY(posYM3);
+            	
+                paneWord.getChildren().addAll(rMostro1);
+            	paneWord.getChildren().addAll(spriteMostro);
+            	paneWord.getChildren().addAll(rMostro2);
+            	paneWord.getChildren().addAll(spriteMostro2);
+            	paneWord.getChildren().addAll(rMostro3);
+            	paneWord.getChildren().addAll(spriteMostro3);
+            	richiamaMostro.muoviMostro();
+            }
         }
     }
     
