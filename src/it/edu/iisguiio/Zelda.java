@@ -3,8 +3,6 @@ package it.edu.iisguiio;
 
 import java.io.IOException;
 
-import javafx.animation.Animation;
-import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -13,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -21,6 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -134,6 +134,13 @@ public class Zelda extends Application {
         rMostro1.setY(HEIGHT_GIOCO / 4);
         spriteMostro.setX(HEIGHT_GIOCO / 4);
         spriteMostro.setY(HEIGHT_GIOCO / 4);
+        
+        //mostro 2 
+        rMostro2.setFill(Color.TRANSPARENT); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
+        rMostro2.setStroke(Color.TRANSPARENT);
+        //mostro 3
+        rMostro3.setFill(Color.TRANSPARENT); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
+        rMostro3.setStroke(Color.TRANSPARENT);
         // Aggiungi il mostro al gioco
         paneWord.getChildren().addAll(rMostro1, spriteMostro);
         
@@ -157,10 +164,9 @@ public class Zelda extends Application {
     	bStart.setPrefSize(4*tilesSize, tilesSize);
     	bStart.setLayoutX(WIDTH_GIOCO/2-tilesSize*2);
     	bStart.setLayoutY(HEIGHT_GIOCO/2-tilesSize);
-    	//Button bComandi = new Button("comandi");
     	bComandi.setPrefSize(4*tilesSize, tilesSize);
     	bComandi.setLayoutX(WIDTH_GIOCO/2-tilesSize*2);
-    	bComandi.setLayoutY(HEIGHT_GIOCO/2);
+    	bComandi.setLayoutY(HEIGHT_GIOCO/2+tilesSize);
     	paneMenù.getChildren().addAll(bComandi , bStart);
     	paneWord.getChildren().add(paneMenù);
     	paneMenù.setBackground(null);
@@ -169,165 +175,234 @@ public class Zelda extends Application {
     	bComandi.setOnAction(e-> mostraComandi());
     }
     public void iniziaAvventura() {
+    	
     	timelineGioco.play();
     	paneComandi.getChildren().clear();
     	paneMenù.getChildren().clear();
     }
     public void mostraComandi() {
-    	try {
+    	/*try {
 			Scene scenaComadi = new Scene( FXMLLoader.load(Zelda.class.getResource("menuComandi.fxml")) );
-			 finestra.setScene(scenaComadi);
-		     finestra.show();
+			finestra.setScene(scenaComadi);
+		    finestra.show();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-    	
+		}*/
+
+    	ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("Immagini/mappa.jpg")));
+    	imageView.setFitWidth(911.0);
+    	imageView.setFitHeight(825.0);
+    	imageView.setLayoutX(-49.0);
+    	imageView.setLayoutY(-171.0);
+    	imageView.setPickOnBounds(true);
+    	imageView.setPreserveRatio(true);
+
+    	Button buttonIniziaAvventura = new Button("Inizia la tua avventura");
+    	buttonIniziaAvventura.setLayoutX(303.0);
+    	buttonIniziaAvventura.setLayoutY(379.0);
+    	buttonIniziaAvventura.setOnAction(e -> iniziaAvventura());
+    	buttonIniziaAvventura.setPrefWidth(204.0);
+    	buttonIniziaAvventura.setPrefHeight(25.0);
+
+    	Button buttonEnter = new Button("ENTER");
+    	buttonEnter.setLayoutX(303.0);
+    	buttonEnter.setLayoutY(335.0);
+
+    	Button buttonD = new Button("D");
+    	buttonD.setLayoutX(303.0);
+    	buttonD.setLayoutY(288.0);
+    	buttonD.setPrefWidth(51.0);
+    	buttonD.setPrefHeight(25.0);
+
+    	Button buttonA = new Button("A");
+    	buttonA.setLayoutX(303.0);
+    	buttonA.setLayoutY(237.0);
+    	buttonA.setPrefWidth(51.0);
+    	buttonA.setPrefHeight(25.0);
+
+    	Button buttonS = new Button("S");
+    	buttonS.setLayoutX(303.0);
+    	buttonS.setLayoutY(191.0);
+    	buttonS.setPrefWidth(51.0);
+    	buttonS.setPrefHeight(25.0);
+
+    	Button buttonW = new Button("W");
+    	buttonW.setLayoutX(303.0);
+    	buttonW.setLayoutY(153.0);
+    	buttonW.setPrefWidth(51.0);
+    	buttonW.setPrefHeight(25.0);
+
+    	Label labelMuoviAlto = new Label("Muovi verso l'alto");
+    	labelMuoviAlto.setLayoutX(370.0);
+    	labelMuoviAlto.setLayoutY(153.0);
+    	labelMuoviAlto.setPrefWidth(140.0);
+    	labelMuoviAlto.setPrefHeight(25.0);
+    	labelMuoviAlto.setFont(new Font(14.0));
+
+    	Label labelMuoviBasso = new Label("Muovi verso il basso");
+    	labelMuoviBasso.setLayoutX(370.0);
+    	labelMuoviBasso.setLayoutY(191.0);
+    	labelMuoviBasso.setPrefWidth(140.0);
+    	labelMuoviBasso.setPrefHeight(25.0);
+    	labelMuoviBasso.setFont(new Font(14.0));
+
+    	Label labelMuoviSinistra = new Label("Muovi a sinistra");
+    	labelMuoviSinistra.setLayoutX(370.0);
+    	labelMuoviSinistra.setLayoutY(237.0);
+    	labelMuoviSinistra.setPrefWidth(140.0);
+    	labelMuoviSinistra.setPrefHeight(25.0);
+    	labelMuoviSinistra.setFont(new Font(14.0));
+
+    	Label labelMuoviDestra = new Label("Muovi a destra");
+    	labelMuoviDestra.setLayoutX(370.0);
+    	labelMuoviDestra.setLayoutY(288.0);
+    	labelMuoviDestra.setPrefWidth(140.0);
+    	labelMuoviDestra.setPrefHeight(25.0);
+    	labelMuoviDestra.setFont(new Font(14.0));
+
+    	Label labelAttacca = new Label("Attacca");
+    	labelAttacca.setLayoutX(375.0);
+    	labelAttacca.setLayoutY(335.0);
+    	labelAttacca.setPrefWidth(140.0);
+    	labelAttacca.setPrefHeight(25.0);
+    	labelAttacca.setFont(new Font(14.0));
+
+    	paneComandi.getChildren().addAll(imageView, buttonIniziaAvventura, buttonEnter, buttonD, buttonA, buttonS, buttonW,
+    	        labelMuoviAlto, labelMuoviBasso, labelMuoviSinistra, labelMuoviDestra, labelAttacca);
+    	paneWord.getChildren().add(paneComandi);
     }
-    public void aggiornaGioco(){
+    public void aggiornaGioco() {
         // Muovi il mostro
         richiamaMostro.muoviMostro();
-        
+
         // Verifica la collisione con i mostri
         Shape intersect1 = Shape.intersect(personaggio, rMostro1);
         Shape intersect2 = Shape.intersect(personaggio, rMostro2);
-        Shape intersect3 = Shape.intersect(personaggio, rMostro2);
-       
-       
-       
+        Shape intersect3 = Shape.intersect(personaggio, rMostro3);
+
         // Verifica la collisione tra il personaggio e il primo mostro
-        if(intersect1.getBoundsInLocal().getWidth() != -1) {
-            if (richiamaPersonaggio.HoAttaccato==true) {
-                paneWord.getChildren().removeAll(spriteMostro,rMostro1);
-                //System.out.println("tolti spriteMostro,rMostro1");
-                mostro1Eliminato=true;
+        if (intersect1.getBoundsInLocal().getWidth() != -1) {
+            if (richiamaPersonaggio.HoAttaccato == true) {
+                paneWord.getChildren().removeAll(spriteMostro, rMostro1);
+                mostro1Eliminato = true;
             } else {
                 if (vitaPersonaggio == 0) {
-                    //paneWord.getChildren().removeAll(personaggio, spritePersonaggio);
+                    // Gestisci la fine del gioco
                 } else {
                     vitaPersonaggio--;
-                }   
-            }      
-        }
-        if(intersect2.getBoundsInLocal().getWidth() != -1) {
-        	if (richiamaPersonaggio.HoAttaccato==true) {
-                paneWord.getChildren().removeAll(spriteMostro2,rMostro2);
-                mostro2Eliminato=true;
-            } else {
-                if (vitaPersonaggio == 0) {
-                   // paneWord.getChildren().removeAll(personaggio, spritePersonaggio);
-                } else {
-                    vitaPersonaggio--;
-                }   
+                }
             }
         }
-        if(intersect3.getBoundsInLocal().getWidth() != -1) {
-        	if (richiamaPersonaggio.HoAttaccato==true) {
-                paneWord.getChildren().removeAll(spriteMostro3,rMostro3);
-                mostro3Eliminato=true;
+        if (intersect2.getBoundsInLocal().getWidth() != -1) {
+            if (richiamaPersonaggio.HoAttaccato == true) {
+                paneWord.getChildren().removeAll(spriteMostro2, rMostro2);
+                mostro2Eliminato = true;
             } else {
                 if (vitaPersonaggio == 0) {
-                    //paneWord.getChildren().removeAll(personaggio, spritePersonaggio);
+                    // Gestisci la fine del gioco
                 } else {
                     vitaPersonaggio--;
-                }   
+                }
             }
         }
-        if( fase1==true && mostro1Eliminato==true) {
-        	System.out.println("fase1=true");
-        	fase1=false;
-        	fase2=true;
-        	aggiungiMostro();
+        if (intersect3.getBoundsInLocal().getWidth() != -1) {
+            if (richiamaPersonaggio.HoAttaccato == true) {
+                paneWord.getChildren().removeAll(spriteMostro3, rMostro3);
+                mostro3Eliminato = true;
+            } else {
+                if (vitaPersonaggio == 0) {
+                    // Gestisci la fine del gioco
+                } else {
+                    vitaPersonaggio--;
+                }
+            }
         }
-        if( fase2==true && mostro1Eliminato==true && mostro2Eliminato==true) {
-        	System.out.println("fase2");
-        	fase2=false;
-        	System.out.println("fase2=false");
-        	fase3=true;
-        	System.out.println("fase3=true");
-        	aggiungiMostro();
-        } 
-        if(fase3==true && mostro1Eliminato==true && mostro2Eliminato==true && mostro3Eliminato==true) {
-        	aggiungiMostro();
-        } 
+        // Controllo se devo passare alla fase successiva
+        if (fase1 && mostro1Eliminato) {
+            fase1 = false;
+            fase2 = true;
+            aggiungiMostro();
+        }
+        if (fase2 && mostro1Eliminato && mostro2Eliminato) {
+            fase2 = false;
+            fase3 = true;
+            aggiungiMostro();
+        }
+        if (fase3 && mostro1Eliminato && mostro2Eliminato && mostro3Eliminato) {
+            aggiungiMostro();
+        }
     }
 
     // Funzione per aggiungere un nuovo mostro se necessario
     private void aggiungiMostro() {
-    	mostro1Eliminato=false; 
-    	mostro2Eliminato=false;
-    	mostro3Eliminato=false;
-    	if (fase2==true) {
-        	//System.out.println("fase 2");        	
-        	int posXM1 = (int) (Math.random()*(gameColoum+1))*tilesSize;
-        	System.out.println(posXM1);
-        	int posYM1 = (int) (Math.random()*(gameRow+1))*tilesSize;
-        	System.out.println(posYM1);
-        	int posXM2 = (int) (Math.random()*(gameColoum+1))*tilesSize;
-        	System.out.println(posXM2);
-        	int posYM2 = (int) (Math.random()*(gameRow+1))*tilesSize;
-        	System.out.println(posYM2);
-            //genero il mostro uno in una posizione casuale
-            rMostro1.setX(posXM1); 
+        mostro1Eliminato = false;
+        mostro2Eliminato = false;
+        mostro3Eliminato = false;
+
+        if (fase2) {
+            int posXM1 = (int) (Math.random() * gameColoum) * tilesSize;
+            int posYM1 = (int) (Math.random() * gameRow) * tilesSize;
+            int posXM2 = (int) (Math.random() * gameColoum) * tilesSize;
+            int posYM2 = (int) (Math.random() * gameRow) * tilesSize;
+
+            // Posiziona il primo mostro
+            rMostro1.setX(posXM1);
             rMostro1.setY(posYM1);
-            spriteMostro.setX(posYM1);
+            spriteMostro.setX(posXM1);
             spriteMostro.setY(posYM1);
-            
-            //posizione il mostro e do un colore al rettangolo
-            rMostro2.setFill(Color.TRANSPARENT); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
-            rMostro2.setStroke(Color.TRANSPARENT);
-            rMostro2.setX(posXM2*tilesSize); // Posizione iniziale del mostro
-            rMostro2.setY(posYM2*tilesSize);
-            spriteMostro2.setX(posYM2*tilesSize);
-            spriteMostro2.setY(posYM2*tilesSize);
-        	//paneWord.getChildren().addAll(spriteMostro, rMostro1, spriteMostro2, rMostro2);
-            paneWord.getChildren().addAll(rMostro1);
-        	paneWord.getChildren().addAll(spriteMostro);
-        	paneWord.getChildren().addAll(rMostro2);
-        	paneWord.getChildren().addAll(spriteMostro2);
+
+            // Posiziona il secondo mostro
+            rMostro2.setX(posXM2);
+            rMostro2.setY(posYM2);
+            spriteMostro2.setX(posXM2);
+            spriteMostro2.setY(posYM2);
+
+            // Aggiungi i mostri al gioco
+            paneWord.getChildren().addAll(rMostro1, spriteMostro, rMostro2, spriteMostro2);
+
+            // Muovi i mostri
             richiamaMostro.muoviMostro();
-        }else {
-        	if(fase3==true) {        		
-            	int posXM1 = (int) (Math.random()*(gameColoum+1))*tilesSize;
-            	int posYM1 = (int) (Math.random()*(gameRow+1))*tilesSize;
-            	int posXM2 = (int) (Math.random()*(gameColoum+1))*tilesSize;
-            	int posYM2 = (int) (Math.random()*(gameRow+1))*tilesSize;
-            	int posXM3 = (int) (Math.random()*(gameColoum+1))*tilesSize;
-            	int posYM3 = (int) (Math.random()*(gameRow+1))*tilesSize;
-            	//posizione il mostro 1
-            	rMostro1.setX(posXM1);
+        } else {
+            if (fase3) {
+                int posXM1 = (int) (Math.random() * gameColoum) * tilesSize;
+                int posYM1 = (int) (Math.random() * gameRow) * tilesSize;
+                int posXM2 = (int) (Math.random() * gameColoum) * tilesSize;
+                int posYM2 = (int) (Math.random() * gameRow) * tilesSize;
+                int posXM3 = (int) (Math.random() * gameColoum) * tilesSize;
+                int posYM3 = (int) (Math.random() * gameRow) * tilesSize;
+
+                // Posiziona il primo mostro
+                rMostro1.setX(posXM1);
                 rMostro1.setY(posYM1);
-                spriteMostro.setX(posYM1);
+                spriteMostro.setX(posXM1);
                 spriteMostro.setY(posYM1);
 
-                //posiziono il mostro 2
-            	rMostro2.setX(posXM2); 
+                // Posiziona il secondo mostro
+                rMostro2.setX(posXM2);
                 rMostro2.setY(posYM2);
-                spriteMostro2.setX(posYM2);
+                spriteMostro2.setX(posXM2);
                 spriteMostro2.setY(posYM2);
-            	
-                //posizione il mostro 3
-            	rMostro3.setFill(Color.TRANSPARENT); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
-                rMostro3.setStroke(Color.TRANSPARENT);
-                rMostro3.setX(posXM3); // Posizione iniziale del mostro
+
+                // Posiziona il terzo mostro
+                rMostro3.setX(posXM3);
                 rMostro3.setY(posYM3);
                 spriteMostro3.setX(posXM3);
                 spriteMostro3.setY(posYM3);
-            	
-                paneWord.getChildren().addAll(rMostro1);
-            	paneWord.getChildren().addAll(spriteMostro);
-            	paneWord.getChildren().addAll(rMostro2);
-            	paneWord.getChildren().addAll(spriteMostro2);
-            	paneWord.getChildren().addAll(rMostro3);
-            	paneWord.getChildren().addAll(spriteMostro3);
-            	richiamaMostro.muoviMostro();
+
+                // Aggiungi i mostri al gioco
+                paneWord.getChildren().addAll(rMostro1, spriteMostro, rMostro2, spriteMostro2, rMostro3, spriteMostro3);
+
+                // Muovi i mostri
+                richiamaMostro.muoviMostro();
             }
         }
     }
+
     
-    @FXML
+    /*@FXML
 	private void attivaGioco(ActionEvent e){
     	System.out.println("click!");
-    }
+    }*/
 
 }
