@@ -79,8 +79,6 @@ public class Zelda extends Application {
 
     Stage finestra;
     public void start(Stage primaryStage) throws Exception {
-    	System.out.println("withd"+WIDTH_GIOCO);
-    	System.out.println("he"+HEIGHT_GIOCO);
     	finestra=primaryStage;;
         // Creo la griglia
         paneMenù.setPrefSize(WIDTH_GIOCO, HEIGHT_GIOCO);
@@ -140,10 +138,25 @@ public class Zelda extends Application {
         //mostro 3
         rMostro3.setFill(Color.BLUE); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
         rMostro3.setStroke(Color.TRANSPARENT);
-        // Aggiungi il mostro al gioco
-        paneWord.getChildren().addAll(rMostro1, spriteMostro);
+       
+        //posiziono il punteggio e i cuori
+        lPunteggio.setLayoutX(0);
+        lPunteggio.setLayoutY(0);
+        lPunteggio.setPrefSize(tilesSize*3, tilesSize);
+        
+        Image healtImg = new Image(getClass().getResourceAsStream("Immagini/cuori/heartfull.png"));
+        ImageView healtImgWiew = new ImageView(healtImg);
+        healtImgWiew.setLayoutX(0);
+        healtImgWiew.setLayoutY(tilesSize);
+        healtImgWiew.setFitWidth(tilesSize*2);
+        healtImgWiew.setFitHeight(tilesSize);
         
         scene.setOnKeyPressed(this::premiTasto);
+        
+        // Aggiungi tutto al gioco
+        paneWord.getChildren().addAll(rMostro1, spriteMostro, lPunteggio,healtImgWiew);
+        
+        
         
         //permette di richiamare la funzione all'inizio
         AvviaMenù();
