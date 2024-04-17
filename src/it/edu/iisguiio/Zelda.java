@@ -21,7 +21,7 @@ import javafx.util.Duration;
 
 public class Zelda extends Application {
     Timeline timelineGioco = new Timeline(new KeyFrame(
-            Duration.seconds(0.35), // ogni quanto va chiamata la funzione
+            Duration.seconds(0.5), // ogni quanto va chiamata la funzione
             x -> aggiornaGioco()));
     //dimensione schermo i tiles del gioco
     int defaultTileSize = 16;
@@ -73,6 +73,8 @@ public class Zelda extends Application {
     boolean mostro3Eliminato=false;
     //label punteggio
     Label lPunteggio = new Label("Mosstri eliminati "+countMostriEliminati);
+    Image healtImg = new Image(getClass().getResourceAsStream("Immagini/cuori/heartfull.png"));
+    ImageView healtImgWiew = new ImageView(healtImg);
     public static void main(String args[]) {
         launch(args);
     }
@@ -123,7 +125,7 @@ public class Zelda extends Application {
         
         // Inizializza il gestore del personaggio
         richiamaPersonaggio = new Personaggio(personaggio, WIDTH_GIOCO, HEIGHT_GIOCO, spritePersonaggio, tilesSize);
-        richiamaMostro = new Mostro(rMostro1, rMostro2, rMostro3, WIDTH_GIOCO, HEIGHT_GIOCO, tilesSize, spriteMostro, spriteMostro2, spriteMostro3);
+        richiamaMostro = new Mostro(rMostro1, rMostro2, rMostro3, WIDTH_GIOCO, HEIGHT_GIOCO, tilesSize, spriteMostro, spriteMostro2, spriteMostro3, personaggio);
         //posizione il mostro e do un colore al rettangolo
         rMostro1.setFill(Color.BLACK); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
         rMostro1.setStroke(Color.TRANSPARENT);
@@ -142,10 +144,9 @@ public class Zelda extends Application {
         //posiziono il punteggio e i cuori
         lPunteggio.setLayoutX(0);
         lPunteggio.setLayoutY(0);
-        lPunteggio.setPrefSize(tilesSize*3, tilesSize);
+        lPunteggio.setPrefSize(tilesSize*5, tilesSize);
+        lPunteggio.setFont(Font.loadFont(getClass().getResourceAsStream("font/SuperPixel-m2L8j.ttf"), 12));
         
-        Image healtImg = new Image(getClass().getResourceAsStream("Immagini/cuori/heartfull.png"));
-        ImageView healtImgWiew = new ImageView(healtImg);
         healtImgWiew.setLayoutX(0);
         healtImgWiew.setLayoutY(tilesSize);
         healtImgWiew.setFitWidth(tilesSize*2);
@@ -193,48 +194,48 @@ public class Zelda extends Application {
     }
     public void mostraComandi() {
 
-    	ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("Immagini/mappa.jpg")));
-    	imageView.setFitWidth(911.0);
-    	imageView.setFitHeight(825.0);
-    	imageView.setLayoutX(-49.0);
-    	imageView.setLayoutY(-171.0);
-    	imageView.setPickOnBounds(true);
-    	imageView.setPreserveRatio(true);
+    	ImageView mappaImgWiew = new ImageView(new Image(getClass().getResourceAsStream("Immagini/mappa.jpg")));
+    	mappaImgWiew.setFitWidth(911.0);
+    	mappaImgWiew.setFitHeight(825.0);
+    	mappaImgWiew.setLayoutX(-49.0);
+    	mappaImgWiew.setLayoutY(-171.0);
+    	mappaImgWiew.setPickOnBounds(true);
+    	mappaImgWiew.setPreserveRatio(true);
 
-    	Button buttonIniziaAvventura = new Button("Inizia la tua avventura");
-    	buttonIniziaAvventura.setLayoutX(303.0);
-    	buttonIniziaAvventura.setLayoutY(379.0);
-    	buttonIniziaAvventura.setOnAction(e -> iniziaAvventura());
-    	buttonIniziaAvventura.setPrefWidth(204.0);
-    	buttonIniziaAvventura.setPrefHeight(25.0);
+    	Button bIniziaAvventura = new Button("Inizia la tua avventura");
+    	bIniziaAvventura.setLayoutX(303.0);
+    	bIniziaAvventura.setLayoutY(379.0);
+    	bIniziaAvventura.setOnAction(e -> iniziaAvventura());
+    	bIniziaAvventura.setPrefWidth(204.0);
+    	bIniziaAvventura.setPrefHeight(25.0);
 
-    	Button buttonEnter = new Button("ENTER");
-    	buttonEnter.setLayoutX(303.0);
-    	buttonEnter.setLayoutY(335.0);
+    	Button bEnter = new Button("ENTER");
+    	bEnter.setLayoutX(303.0);
+    	bEnter.setLayoutY(335.0);
 
-    	Button buttonD = new Button("D");
-    	buttonD.setLayoutX(303.0);
-    	buttonD.setLayoutY(288.0);
-    	buttonD.setPrefWidth(51.0);
-    	buttonD.setPrefHeight(25.0);
+    	Button bDestra = new Button("D");
+    	bDestra.setLayoutX(303.0);
+    	bDestra.setLayoutY(288.0);
+    	bDestra.setPrefWidth(51.0);
+    	bDestra.setPrefHeight(25.0);
 
-    	Button buttonA = new Button("A");
-    	buttonA.setLayoutX(303.0);
-    	buttonA.setLayoutY(237.0);
-    	buttonA.setPrefWidth(51.0);
-    	buttonA.setPrefHeight(25.0);
+    	Button bASinistra = new Button("A");
+    	bASinistra.setLayoutX(303.0);
+    	bASinistra.setLayoutY(237.0);
+    	bASinistra.setPrefWidth(51.0);
+    	bASinistra.setPrefHeight(25.0);
 
-    	Button buttonS = new Button("S");
-    	buttonS.setLayoutX(303.0);
-    	buttonS.setLayoutY(191.0);
-    	buttonS.setPrefWidth(51.0);
-    	buttonS.setPrefHeight(25.0);
+    	Button bSDown = new Button("S");
+    	bSDown.setLayoutX(303.0);
+    	bSDown.setLayoutY(191.0);
+    	bSDown.setPrefWidth(51.0);
+    	bSDown.setPrefHeight(25.0);
 
-    	Button buttonW = new Button("W");
-    	buttonW.setLayoutX(303.0);
-    	buttonW.setLayoutY(153.0);
-    	buttonW.setPrefWidth(51.0);
-    	buttonW.setPrefHeight(25.0);
+    	Button bWUp = new Button("W");
+    	bWUp.setLayoutX(303.0);
+    	bWUp.setLayoutY(153.0);
+    	bWUp.setPrefWidth(51.0);
+    	bWUp.setPrefHeight(25.0);
 
     	Label labelMuoviAlto = new Label("Muovi verso l'alto");
     	labelMuoviAlto.setLayoutX(370.0);
@@ -271,12 +272,15 @@ public class Zelda extends Application {
     	labelAttacca.setPrefHeight(25.0);
     	labelAttacca.setFont(new Font(14.0));
 
-    	paneComandi.getChildren().addAll(imageView, buttonIniziaAvventura, buttonEnter, buttonD, buttonA, buttonS, buttonW,
+    	paneComandi.getChildren().addAll(mappaImgWiew, bIniziaAvventura, bEnter, bDestra, bASinistra, bSDown, bWUp,
     	        labelMuoviAlto, labelMuoviBasso, labelMuoviSinistra, labelMuoviDestra, labelAttacca);
     	paneWord.getChildren().add(paneComandi);
     }
     public void aggiornaGioco() {
         // Muovi il mostro
+        richiamaMostro.muoviMostro();
+
+     // Muovi il mostro
         richiamaMostro.muoviMostro();
 
         // Verifica la collisione con i mostri
@@ -285,39 +289,47 @@ public class Zelda extends Application {
         Shape intersect3 = Shape.intersect(personaggio, rMostro3);
 
         // Verifica la collisione tra il personaggio e il primo mostro
-        if (intersect1.getBoundsInLocal().getWidth() != -1) {
+        if (intersect1.getBoundsInLocal().getWidth() != -1 && !mostro1Eliminato) {
             if (richiamaPersonaggio.HoAttaccato == true) {
                 paneWord.getChildren().removeAll(spriteMostro, rMostro1);
                 mostro1Eliminato = true;
+                countMostriEliminati++;
+                lPunteggio.setText("Mostri eliminati: " + countMostriEliminati);
             } else {
-                if (vitaPersonaggio == 0) {
-                    // Gestisci la fine del gioco
-                } else {
+                // Perdita di vita solo se non è stato eliminato il mostro
+                if (!mostro1Eliminato && vitaPersonaggio > 0) {
                     vitaPersonaggio--;
+                    AggiornaVita();
                 }
             }
         }
-        if (intersect2.getBoundsInLocal().getWidth() != -1) {
+        // Verifica la collisione con il secondo mostro
+        if (intersect2.getBoundsInLocal().getWidth() != -1 && !mostro2Eliminato) {
             if (richiamaPersonaggio.HoAttaccato == true) {
                 paneWord.getChildren().removeAll(spriteMostro2, rMostro2);
                 mostro2Eliminato = true;
+                countMostriEliminati++;
+                lPunteggio.setText("Mostri eliminati: " + countMostriEliminati);
             } else {
-                if (vitaPersonaggio == 0) {
-                    // Gestisci la fine del gioco
-                } else {
+                // Perdita di vita solo se non è stato eliminato il mostro
+                if (!mostro2Eliminato && vitaPersonaggio > 0) {
                     vitaPersonaggio--;
+                    AggiornaVita();
                 }
             }
         }
-        if (intersect3.getBoundsInLocal().getWidth() != -1) {
+        // Verifica la collisione con il terzo mostro
+        if (intersect3.getBoundsInLocal().getWidth() != -1 && !mostro3Eliminato) {
             if (richiamaPersonaggio.HoAttaccato == true) {
                 paneWord.getChildren().removeAll(spriteMostro3, rMostro3);
                 mostro3Eliminato = true;
+                countMostriEliminati++;
+                lPunteggio.setText("Mostri eliminati: " + countMostriEliminati);
             } else {
-                if (vitaPersonaggio == 0) {
-                    // Gestisci la fine del gioco
-                } else {
+                // Perdita di vita solo se non è stato eliminato il mostro
+                if (!mostro3Eliminato && vitaPersonaggio > 0) {
                     vitaPersonaggio--;
+                    AggiornaVita();
                 }
             }
         }
@@ -337,7 +349,23 @@ public class Zelda extends Application {
         }
     }
 
-    // Funzione per aggiungere un nuovo mostro se necessario
+    private void AggiornaVita() {
+		if (vitaPersonaggio==2) {
+			Image heart2 = new Image(getClass().getResourceAsStream("Immagini/cuori/heart2.png"));
+		    healtImgWiew.setImage(heart2);
+		}
+		if(vitaPersonaggio==1) {
+			Image heart1 = new Image(getClass().getResourceAsStream("Immagini/cuori/heart1.png"));
+		    healtImgWiew.setImage(heart1);
+		}
+		if (vitaPersonaggio==0) {
+			Image heart0 = new Image(getClass().getResourceAsStream("Immagini/cuori/zerolife.png"));
+		    healtImgWiew.setImage(heart0);
+		}
+		
+	}
+
+	// Funzione per aggiungere un nuovo mostro se necessario
     private void aggiungiMostro() {
         mostro1Eliminato = false;
         mostro2Eliminato = false;

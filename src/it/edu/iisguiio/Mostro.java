@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Mostro {
-
+	public Rectangle personaggio;
     public Rectangle mostro1;
     public Rectangle mostro2;
     public Rectangle mostro3;
@@ -18,10 +18,25 @@ public class Mostro {
     private int tileSize; // Valore del tile
     
     // booleane per la direzione del mostro
-    boolean walkDown = false;
-    boolean walkLeft = false;
-    boolean walkRight = false;
-    boolean walkUp = false;
+    boolean walkDownImg = false;
+    boolean walkLeftImg = false;
+    boolean walkRightImg = false;
+    boolean walkUpImg = false;
+    
+    boolean walkUpM1 = false;
+    boolean walkDownM1 = false;
+    boolean walkLeftM1 = false;
+    boolean walkRightM1 = false;
+    boolean walkUpM2 = false;
+    boolean walkDownM2 = false;
+    boolean walkLeftM2 = false;
+    boolean walkRightM2 = false;
+    boolean walkUpM3 = false;
+    boolean walkDownM3 = false;
+    boolean walkLeftM3 = false;
+    boolean walkRightM3 = false;
+    
+    boolean personaggioDavanti=false;
 
     // coordinate del mostro per calcolare il suo spostamento
     double xPrecedenteM1 = 0;
@@ -33,7 +48,7 @@ public class Mostro {
 
     public Mostro(Rectangle rMostro1, Rectangle rMostro2, Rectangle rMostro3, double maxWidth, double maxHeight,
             int tileSize, ImageView spriteMostro1, ImageView spriteMostro2,
-            ImageView spriteMostro3) {
+            ImageView spriteMostro3, Rectangle personaggio) {
         this.mostro1 = rMostro1;
         this.mostro2 = rMostro2;
         this.mostro3 = rMostro3;
@@ -43,6 +58,7 @@ public class Mostro {
         this.spriteMostro1 = spriteMostro1;
         this.spriteMostro2 = spriteMostro2;
         this.spriteMostro3 = spriteMostro3;
+        this.personaggio = personaggio;
     }
 
     // tutte le immagini che utilizzo per la camminata
@@ -54,14 +70,51 @@ public class Mostro {
     Image walk_left_2 = new Image(getClass().getResourceAsStream("Immagini/Monster/skeletonlord_left_2.png"));
     Image walk_right_1 = new Image(getClass().getResourceAsStream("Immagini/Monster/skeletonlord_right_1.png"));
     Image walk_right_2 = new Image(getClass().getResourceAsStream("Immagini/Monster/skeletonlord_right_2.png"));
+    
+    Image attacco_down_1 = new Image(getClass().getResourceAsStream("Immagini/Monster/skeletonlord_attack_down_2.png"));
+    Image attacco_up_1 = new Image(getClass().getResourceAsStream("Immagini/Monster/skeletonlord_attack_up_2.png"));
+    Image attacco_left_1 = new Image(getClass().getResourceAsStream("Immagini/Monster/skeletonlord_attack_left_2.png"));
+    Image attacco_right_1 = new Image(getClass().getResourceAsStream("Immagini/Monster/skeletonlord_attack_right_2.png"));
 
     public void muoviMostro() {
-        Mostro1();
-        Mostro2();
-        Mostro3();
+        mostro1();
+        mostro2();
+        mostro3();
     }
 
-    public void Mostro1() {
+    public void attaccaMostro1() {
+        double xPers = personaggio.getX();
+        double yPers = personaggio.getY();
+    	if (walkUpM1) {
+        	if(yPers == mostro1.getY()+1) {
+        		spriteMostro1.setImage(attacco_up_1);
+        	}
+        }
+		if (walkDownM1) {
+			if(yPers == mostro1.getY()+1) {
+        		spriteMostro1.setImage(attacco_down_1);
+        	}
+		}
+		if (walkLeftM1) {
+			if(xPers == mostro1.getX()-1) {
+        		spriteMostro1.setImage(attacco_left_1);
+        	}
+		}
+		if (walkRightM1) {
+			if(xPers == mostro1.getX()+1) {
+        		spriteMostro1.setImage(attacco_right_1);
+        	}
+		}
+    }
+	public void attaccaMostro2() {
+	        
+	    }
+	public void attaccaMostro3() {
+	    
+	}
+
+
+	public void mostro1() {
         // Dentro il ciclo di aggiornamento del gioco
         int direction = (int) (Math.random() * 4) + 1; // Genera un numero casuale da 1 a 4
 
@@ -100,39 +153,62 @@ public class Mostro {
         // precedente
         // poi inserisco lo sprite in base alla direzione
         if (deltaY < 0) {
+        	walkUpM1=true;
+            walkDownM1 = false;
+            walkLeftM1 = false;
+            walkRightM1 = false;
+            attaccaMostro1();
             // Il mostro si muove verso l'alto
-            if (!walkUp) {
-                walkUp = true;
+            if (!walkUpImg) {
+                walkUpImg = true;
                 spriteMostro1.setImage(walk_up_2);
             } else {
-                walkUp = false;
+                walkUpImg = false;
                 spriteMostro1.setImage(walk_up_1);
             }
-        } else if (deltaY > 0) {
+        } 
+        if (deltaY > 0) {
+        	walkUpM1= false;
+            walkDownM1 = true;
+            walkLeftM1 = false;
+            walkRightM1 = false;
+            attaccaMostro1();
             // Il mostro si muove verso il basso
-            if (!walkDown) {
-                walkDown = true;
+            if (!walkDownImg) {
+                walkDownImg = true;
                 spriteMostro1.setImage(walk_down_2);
             } else {
-                walkDown = false;
+                walkDownImg = false;
                 spriteMostro1.setImage(walk_down_1);
             }
-        } else if (deltaX < 0) {
+        } 
+        if (deltaX < 0) {
+        	walkUpM1 = false;
+            walkDownM1 = false;
+            walkLeftM1 = true;
+            walkRightM1 = false;
+            attaccaMostro1();
             // Il mostro si muove verso sinistra
-            if (!walkLeft) {
-                walkLeft = true;
+            if (!walkLeftImg) {
+                walkLeftImg = true;
                 spriteMostro1.setImage(walk_left_2);
             } else {
-                walkLeft = false;
+                walkLeftImg = false;
                 spriteMostro1.setImage(walk_left_1);
             }
-        } else if (deltaX > 0) {
+        } 
+        if (deltaX > 0) {
+        	walkUpM1 = false;
+            walkDownM1 = false;
+            walkLeftM1 = false;
+            walkRightM1 = true;
+            attaccaMostro1();
             // Il mostro si muove verso destra
-            if (!walkRight) {
-                walkRight = true;
+            if (!walkRightImg) {
+                walkRightImg = true;
                 spriteMostro1.setImage(walk_right_2);
             } else {
-                walkRight = false;
+                walkRightImg = false;
                 spriteMostro1.setImage(walk_right_1);
             }
         }
@@ -141,7 +217,7 @@ public class Mostro {
         yPrecedenteM1 = mostro1.getY();
     }
 
-    public void Mostro2() {
+    public void mostro2() {
         // Dentro il ciclo di aggiornamento del gioco
         int direction = (int) (Math.random() * 4) + 1; // Genera un numero casuale da 1 a 4
 
@@ -180,38 +256,38 @@ public class Mostro {
         // poi inserisco lo sprite in base alla direzione
         if (deltaY < 0) {
             // Il mostro si muove verso l'alto
-            if (!walkUp) {
-                walkUp = true;
+            if (!walkUpImg) {
+                walkUpImg = true;
                 spriteMostro2.setImage(walk_up_2);
             } else {
-                walkUp = false;
+                walkUpImg = false;
                 spriteMostro2.setImage(walk_up_1);
             }
         } else if (deltaY > 0) {
             // Il mostro si muove verso il basso
-            if (!walkDown) {
-                walkDown = true;
+            if (!walkDownImg) {
+                walkDownImg = true;
                 spriteMostro2.setImage(walk_down_2);
             } else {
-                walkDown = false;
+                walkDownImg = false;
                 spriteMostro2.setImage(walk_down_1);
             }
         } else if (deltaX < 0) {
             // Il mostro si muove verso sinistra
-            if (!walkLeft) {
-                walkLeft = true;
+            if (!walkLeftImg) {
+                walkLeftImg = true;
                 spriteMostro2.setImage(walk_left_2);
             } else {
-                walkLeft = false;
+                walkLeftImg = false;
                 spriteMostro2.setImage(walk_left_1);
             }
         } else if (deltaX > 0) {
             // Il mostro si muove verso destra
-            if (!walkRight) {
-                walkRight = true;
+            if (!walkRightImg) {
+                walkRightImg = true;
                 spriteMostro2.setImage(walk_right_2);
             } else {
-                walkRight = false;
+                walkRightImg = false;
                 spriteMostro2.setImage(walk_right_1);
             }
         }
@@ -220,7 +296,7 @@ public class Mostro {
         yPrecedenteM2 = mostro2.getY();
     }
 
-    public void Mostro3() {
+    public void mostro3() {
         // Dentro il ciclo di aggiornamento del gioco
         int direction = (int) (Math.random() * 4) + 1; // Genera un numero casuale da 1 a 4
 
@@ -260,38 +336,38 @@ public class Mostro {
         // poi inserisco lo sprite in base alla direzione
         if (deltaY < 0) {
             // Il mostro si muove verso l'alto
-            if (!walkUp) {
-                walkUp = true;
+            if (!walkUpImg) {
+                walkUpImg = true;
                 spriteMostro3.setImage(walk_up_2);
             } else {
-                walkUp = false;
+                walkUpImg = false;
                 spriteMostro3.setImage(walk_up_1);
             }
         } else if (deltaY > 0) {
             // Il mostro si muove verso il basso
-            if (!walkDown) {
-                walkDown = true;
+            if (!walkDownImg) {
+                walkDownImg = true;
                 spriteMostro3.setImage(walk_down_2);
             } else {
-                walkDown = false;
+                walkDownImg = false;
                 spriteMostro3.setImage(walk_down_1);
             }
         } else if (deltaX < 0) {
             // Il mostro si muove verso sinistra
-            if (!walkLeft) {
-                walkLeft = true;
+            if (!walkLeftImg) {
+                walkLeftImg = true;
                 spriteMostro3.setImage(walk_left_2);
             } else {
-                walkLeft = false;
+                walkLeftImg = false;
                 spriteMostro3.setImage(walk_left_1);
             }
         } else if (deltaX > 0) {
             // Il mostro si muove verso destra
-            if (!walkRight) {
-                walkRight = true;
+            if (!walkRightImg) {
+                walkRightImg = true;
                 spriteMostro3.setImage(walk_right_2);
             } else {
-                walkRight = false;
+                walkRightImg = false;
                 spriteMostro3.setImage(walk_right_1);
             }
         }
