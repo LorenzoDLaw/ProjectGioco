@@ -1,14 +1,9 @@
 
 package it.edu.iisguiio;
 
-import java.io.IOException;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -41,9 +36,9 @@ public class Zelda extends Application {
     double Ypersonaggio=HEIGHT_GIOCO-tilesSize;
     //personaggio e nemici come rettangoli
     Rectangle personaggio = new Rectangle(Xpersonaggio,Ypersonaggio,tilesSize,tilesSize);
-    Rectangle rMostro1= new Rectangle(tilesSize,tilesSize);
-    Rectangle rMostro2 = new Rectangle(tilesSize,tilesSize);
-    Rectangle rMostro3 = new Rectangle(tilesSize,tilesSize);
+    Rectangle rMostro1= new Rectangle(tilesSize-10,tilesSize-5);
+    Rectangle rMostro2 = new Rectangle(tilesSize-10,tilesSize-5);
+    Rectangle rMostro3 = new Rectangle(tilesSize-10,tilesSize-5);
     
     // ImageView per lo sprite del personaggio
     Image spriteImage = new Image(getClass().getResourceAsStream("Immagini/SpriteCamminata/walk_down_1.png"));
@@ -60,8 +55,9 @@ public class Zelda extends Application {
     // classe 
     Personaggio richiamaPersonaggio; 
     Mostro richiamaMostro;
-    
+    //
     int vitaPersonaggio=3;
+    int countMostriEliminati=0;
     // creo i pane per il gioco e il munù
     Pane paneMenù= new Pane();
     Pane paneWord = new Pane();
@@ -75,6 +71,8 @@ public class Zelda extends Application {
     boolean mostro1Eliminato=false;
     boolean mostro2Eliminato=false;
     boolean mostro3Eliminato=false;
+    //label punteggio
+    Label lPunteggio = new Label("Mosstri eliminati "+countMostriEliminati);
     public static void main(String args[]) {
         launch(args);
     }
@@ -121,6 +119,7 @@ public class Zelda extends Application {
         spriteMostro2.setFitHeight(tilesSize);
         spriteMostro3.setFitWidth(tilesSize);
         spriteMostro3.setFitHeight(tilesSize);
+        
         // Aggiungi lo sprite al Pane del gioco
         paneWord.getChildren().addAll(personaggio, spritePersonaggio);
         
@@ -128,7 +127,7 @@ public class Zelda extends Application {
         richiamaPersonaggio = new Personaggio(personaggio, WIDTH_GIOCO, HEIGHT_GIOCO, spritePersonaggio, tilesSize);
         richiamaMostro = new Mostro(rMostro1, rMostro2, rMostro3, WIDTH_GIOCO, HEIGHT_GIOCO, tilesSize, spriteMostro, spriteMostro2, spriteMostro3);
         //posizione il mostro e do un colore al rettangolo
-        rMostro1.setFill(Color.TRANSPARENT); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
+        rMostro1.setFill(Color.BLACK); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
         rMostro1.setStroke(Color.TRANSPARENT);
         rMostro1.setX(WIDTH_GIOCO / 4); // Posizione iniziale del mostro
         rMostro1.setY(HEIGHT_GIOCO / 4);
@@ -136,10 +135,10 @@ public class Zelda extends Application {
         spriteMostro.setY(HEIGHT_GIOCO / 4);
         
         //mostro 2 
-        rMostro2.setFill(Color.TRANSPARENT); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
+        rMostro2.setFill(Color.RED); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
         rMostro2.setStroke(Color.TRANSPARENT);
         //mostro 3
-        rMostro3.setFill(Color.TRANSPARENT); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
+        rMostro3.setFill(Color.BLUE); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
         rMostro3.setStroke(Color.TRANSPARENT);
         // Aggiungi il mostro al gioco
         paneWord.getChildren().addAll(rMostro1, spriteMostro);
@@ -174,21 +173,12 @@ public class Zelda extends Application {
     	bStart.setOnAction(start ->iniziaAvventura());
     	bComandi.setOnAction(e-> mostraComandi());
     }
-    public void iniziaAvventura() {
-    	
+    public void iniziaAvventura() { 	
     	timelineGioco.play();
     	paneComandi.getChildren().clear();
     	paneMenù.getChildren().clear();
     }
     public void mostraComandi() {
-    	/*try {
-			Scene scenaComadi = new Scene( FXMLLoader.load(Zelda.class.getResource("menuComandi.fxml")) );
-			finestra.setScene(scenaComadi);
-		    finestra.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 
     	ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("Immagini/mappa.jpg")));
     	imageView.setFitWidth(911.0);
@@ -398,11 +388,4 @@ public class Zelda extends Application {
             }
         }
     }
-
-    
-    /*@FXML
-	private void attivaGioco(ActionEvent e){
-    	System.out.println("click!");
-    }*/
-
 }
