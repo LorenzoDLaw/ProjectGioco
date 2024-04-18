@@ -18,7 +18,7 @@ public class Personaggio {
     boolean walkLeft = true;
     boolean walkRigth = true;
     char lastDirection = 'w';
-    boolean HoAttaccato = false;
+    boolean hoAttaccato = false;
     public Personaggio(Rectangle personaggio, double maxWidth, double maxHeight, ImageView spritePersonaggio, double TilesSize) {
         this.personaggio = personaggio;
         this.maxWidth = maxWidth;
@@ -26,7 +26,7 @@ public class Personaggio {
         this.spritePersonaggio = spritePersonaggio;
         this.TilesSize = TilesSize;;
         // Imposta il colore di riempimento trasparente
-        personaggio.setFill(Color.YELLOW);
+        personaggio.setFill(Color.BROWN);
         // Imposta il colore del contorno trasparente
         personaggio.setStroke(Color.TRANSPARENT);
     }
@@ -48,7 +48,7 @@ public class Personaggio {
         double Yplayer = personaggio.getY();
         if (e.getText().equals("w")) {
         	lastDirection = 'w';
-        	if(HoAttaccato==true) {
+        	if(hoAttaccato==true) {
         		personaggio.setWidth(TilesSize);
             	spritePersonaggio.setFitWidth(TilesSize);
             	personaggio.setHeight(TilesSize);
@@ -63,10 +63,10 @@ public class Personaggio {
         		spritePersonaggio.setImage(walk_up_1);
         		walkUp=false;
         	}
-        	HoAttaccato=false;
+        	hoAttaccato=false;
         }
         if (e.getText().equals("s")) {
-        	if(HoAttaccato==true) {
+        	if(hoAttaccato==true) {
 	        	personaggio.setWidth(TilesSize);
 	        	spritePersonaggio.setFitWidth(TilesSize);
 	        	personaggio.setHeight(TilesSize);
@@ -84,10 +84,10 @@ public class Personaggio {
         		walkDown=false;
         		spritePersonaggio.setImage(walk_down_1);
         	}
-            HoAttaccato=false;
+            hoAttaccato=false;
         }
         if (e.getText().equals("a")) {
-        	if (HoAttaccato==true) {
+        	if (hoAttaccato==true) {
             	personaggio.setWidth(TilesSize);
             	spritePersonaggio.setFitWidth(TilesSize);
             	personaggio.setHeight(TilesSize);
@@ -106,10 +106,10 @@ public class Personaggio {
         		walkLeft=false;
         		spritePersonaggio.setImage(walk_left_1);
         	}
-        	HoAttaccato=false;
+        	hoAttaccato=false;
         }
         if (e.getText().equals("d")) {
-        	if (HoAttaccato==true) {
+        	if (hoAttaccato==true) {
         		personaggio.setWidth(TilesSize);
             	spritePersonaggio.setFitWidth(TilesSize);
             	personaggio.setHeight(TilesSize);
@@ -127,11 +127,11 @@ public class Personaggio {
         		spritePersonaggio.setImage(walk_right_1);
         		walkRigth=false;
         	}
-            HoAttaccato=false;
+            hoAttaccato=false;
             
         }
         if (e.getCode() == KeyCode.ENTER){
-        	HoAttaccato=true;
+        	hoAttaccato=true;
         	if(lastDirection == 'w') {
         		Yplayer -=TilesSize;
         		personaggio.setHeight(TilesSize*2);
