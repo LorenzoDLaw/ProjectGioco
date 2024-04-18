@@ -1,0 +1,21 @@
+@font-face{
+	font-family: MyFont;
+	src:url(it/edu/iisguiio/font/SuperPixel-m2L8j.ttf); /*percorso relativo al font*/
+	
+}
+              
+/* Stile per i pulsanti */
+.button {
+    -fx-background-color: #4CAF50; /* Colore di sfondo */
+    -fx-text-fill: white; /* Colore del testo */
+    -fx-font-size: 14px; /* Dimensione del testo */
+    -fx-font-weight: bold; /* Testo in grassetto */
+}
+
+/* Stile per le label */
+.label {
+	 -fx-font-family: 'MyFont';
+    -fx-font-size: 16px; /* Dimensione del testo */
+    -fx-text-fill: #333; /* Colore del testo */
+    
+}

@@ -20,7 +20,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Zelda extends Application {
-    Timeline timelineGioco = new Timeline(new KeyFrame(
+	
+	
+    
+	Timeline timelineGioco = new Timeline(new KeyFrame(
             Duration.seconds(0.5), // ogni quanto va chiamata la funzione
             x -> aggiornaGioco()));
     //dimensione schermo i tiles del gioco
@@ -81,6 +84,9 @@ public class Zelda extends Application {
 
     Stage finestra;
     public void start(Stage primaryStage) throws Exception {
+    	
+    	Font font = new Font(getClass().getResource("SuperPixel-m2L8j.ttf").toString(), 30);
+    	
     	finestra=primaryStage;;
         // Creo la griglia
         paneMenù.setPrefSize(WIDTH_GIOCO, HEIGHT_GIOCO);
@@ -161,6 +167,9 @@ public class Zelda extends Application {
         
         //permette di richiamare la funzione all'inizio
         AvviaMenù();
+        
+        scene.getStylesheets().add(getClass().getResource("Stile.css").toExternalForm());
+        
     }
     
     public void premiTasto(KeyEvent e) {
