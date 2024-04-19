@@ -1,21 +1,38 @@
-@font-face{
-	font-family: MyFont;
-	src:url(it/edu/iisguiio/font/SuperPixel-m2L8j.ttf); /*percorso relativo al font*/
-	
-}
-              
-/* Stile per i pulsanti */
+/* Animazione per il pulsante di inizio avventura */
 .button {
     -fx-background-color: #4CAF50; /* Colore di sfondo */
     -fx-text-fill: white; /* Colore del testo */
-    -fx-font-size: 14px; /* Dimensione del testo */
-    -fx-font-weight: bold; /* Testo in grassetto */
+    -fx-font-size: 16px; /* Dimensione del testo */
+    -fx-font-family: "Arial"; /* Font del testo */
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.7) , 10, 0, 0, 1 ); /* Effetto ombreggiato */
+    -fx-background-radius: 5px; /* Angoli arrotondati */
+    -fx-border-radius: 5px; /* Angoli arrotondati */
+    -fx-transition: all 0.3s; /* Transizione animata */
 }
 
-/* Stile per le label */
-.label {
-	 -fx-font-family: 'MyFont';
+/* Animazione al passaggio del mouse per il pulsante di inizio avventura */
+.button:hover {
+    -fx-background-color: #45a049; /* Cambia colore al passaggio del mouse */
+    -fx-effect: innershadow( gaussian , rgba(0,0,0,0.7) , 10, 0, 0, 1 ); /* Effetto ombreggiato */
+    -fx-scale-x: 1.1; /* Ingrandisce l'elemento */
+    -fx-scale-y: 1.1; /* Ingrandisce l'elemento */
+}
+
+/* Animazione per il pulsante dei comandi */
+#bComandi {
+    -fx-background-color: #FF5722; /* Colore di sfondo */
+    -fx-text-fill: white; /* Colore del testo */
     -fx-font-size: 16px; /* Dimensione del testo */
-    -fx-text-fill: #333; /* Colore del testo */
-    
+    -fx-font-family: "Arial"; /* Font del testo */
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.7) , 10, 0, 0, 1 ); /* Effetto ombreggiato */
+    -fx-background-radius: 5px; /* Angoli arrotondati */
+    -fx-border-radius: 5px; /* Angoli arrotondati */
+    -fx-transition: all 0.3s; /* Transizione animata */
+}
+
+/* Animazione al passaggio del mouse per il pulsante dei comandi */
+#bComandi:hover 	{
+    -fx-background-color: #e64a19; /* Cambia colore al passaggio del mouse */
+    -fx-effect: innershadow( gaussian , rgba(0,0,0,0.7) , 10, 0, 0, 1 ); /* Effetto ombreggiato */
+    -fx-rotate: 5deg; /* Ruota leggermente l'elemento */
 }

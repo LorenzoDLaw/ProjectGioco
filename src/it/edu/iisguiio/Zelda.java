@@ -90,7 +90,8 @@ public class Zelda extends Application {
     Stage finestra;
     public void start(Stage primaryStage) throws Exception {
     	
-    	Font font = new Font(getClass().getResource("SuperPixel-m2L8j.ttf").toString(), 30);
+    	//Font font = new Font(getClass().getResource("SuperPixel-m2L8j.ttf").toString(), 30);
+    	//lPunteggio.setFont(font);
     	
     	finestra=primaryStage;;
         // Creo la griglia
