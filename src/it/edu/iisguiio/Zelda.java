@@ -21,8 +21,6 @@ import javafx.util.Duration;
 
 public class Zelda extends Application {
 	
-	
-    
 	Timeline timelineGioco = new Timeline(new KeyFrame(
             Duration.seconds(0.5), // ogni quanto va chiamata la funzione
             x -> aggiornaGioco()));
@@ -139,10 +137,6 @@ public class Zelda extends Application {
         //posizione il mostro e do un colore al rettangolo
         rMostro1.setFill(Color.TRANSPARENT); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
         rMostro1.setStroke(Color.TRANSPARENT);
-        /*rMostro1.setX(WIDTH_GIOCO / 4); // Posizione iniziale del mostro
-        rMostro1.setY(HEIGHT_GIOCO / 4);
-        spriteMostro.setX(HEIGHT_GIOCO / 4);
-        spriteMostro.setY(HEIGHT_GIOCO / 4);*/
         
         //mostro 2 
         rMostro2.setFill(Color.TRANSPARENT); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
@@ -171,10 +165,7 @@ public class Zelda extends Application {
         AvviaMenù();
         
         scene.getStylesheets().add(getClass().getResource("Stile.css").toExternalForm());
-        
-     
-
-       
+          
     }
     
     public void premiTasto(KeyEvent e) {
@@ -184,8 +175,7 @@ public class Zelda extends Application {
             	AvviaMenù();
             }   	
     } 
-    
-    
+        
     public void AvviaMenù() {
     	bStart.setPrefSize(4*tilesSize, tilesSize);
     	bStart.setLayoutX(WIDTH_GIOCO/2-tilesSize*2);
@@ -200,6 +190,7 @@ public class Zelda extends Application {
     	bStart.setOnAction(start ->iniziaAvventura());
     	bComandi.setOnAction(e-> mostraComandi());
     }
+    
     public void iniziaAvventura() { 	
     	timelineGioco.play();
     	if(haiPerso) {
@@ -212,6 +203,7 @@ public class Zelda extends Application {
     	paneMenù.getChildren().clear();
     	paneWord.getChildren().removeAll(paneComandi, paneMenù, paneHaiPerso);
     }
+    
     public void mostraComandi() {
 
     	ImageView mappaImgWiew = new ImageView(new Image(getClass().getResourceAsStream("Immagini/mappa.jpg")));
@@ -296,6 +288,7 @@ public class Zelda extends Application {
     	        labelMuoviAlto, labelMuoviBasso, labelMuoviSinistra, labelMuoviDestra, labelAttacca);
     	paneWord.getChildren().add(paneComandi);
     }
+    
     public void haiPersoMenu() {
     	// fermo la timeline e riporto le variabili vita e counMostri ai loro valori iniziali
     	timelineGioco.stop();
@@ -312,13 +305,7 @@ public class Zelda extends Application {
     	paneHaiPerso.getChildren().addAll(lPerso , bStart);
     	paneWord.getChildren().add(paneHaiPerso);
     	bStart.setOnAction(start ->iniziaAvventura());
-    	
-    	
-
     	lPerso.setId("lPerso");
-
-    	
-    	
     	
     }
     
@@ -345,7 +332,6 @@ public class Zelda extends Application {
         }
         // Verifica la collisione tra il personaggio e il primo mostro
         if (intersect1.getBoundsInLocal().getWidth() != -1 ) {
-        	System.out.println("collide");
         	if (richiamaPersonaggio.hoAttaccato == true) {
         		paneWord.getChildren().removeAll(spriteMostro, rMostro1);
         		//posizion i mostri fuori dalla mappa senno vengono considerati collisioni pure se tolti dalla mappa
