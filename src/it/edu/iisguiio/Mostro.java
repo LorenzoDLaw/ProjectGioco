@@ -82,38 +82,6 @@ public class Mostro {
         mostro3();
     }
 
-    public void attaccaMostro1() {
-        double xPers = personaggio.getX();
-        double yPers = personaggio.getY();
-    	if (walkUpM1) {
-        	if(yPers == mostro1.getY()+1) {
-        		spriteMostro1.setImage(attacco_up_1);
-        	}
-        }
-		if (walkDownM1) {
-			if(yPers == mostro1.getY()+1) {
-        		spriteMostro1.setImage(attacco_down_1);
-        	}
-		}
-		if (walkLeftM1) {
-			if(xPers == mostro1.getX()-1) {
-        		spriteMostro1.setImage(attacco_left_1);
-        	}
-		}
-		if (walkRightM1) {
-			if(xPers == mostro1.getX()+1) {
-        		spriteMostro1.setImage(attacco_right_1);
-        	}
-		}
-    }
-	public void attaccaMostro2() {
-	        
-	    }
-	public void attaccaMostro3() {
-	    
-	}
-
-
 	public void mostro1() {
         // Dentro il ciclo di aggiornamento del gioco
         int direction = (int) (Math.random() * 4) + 1; // Genera un numero casuale da 1 a 4
@@ -157,7 +125,6 @@ public class Mostro {
             walkDownM1 = false;
             walkLeftM1 = false;
             walkRightM1 = false;
-            attaccaMostro1();
             // Il mostro si muove verso l'alto
             if (!walkUpImg) {
                 walkUpImg = true;
@@ -172,7 +139,6 @@ public class Mostro {
             walkDownM1 = true;
             walkLeftM1 = false;
             walkRightM1 = false;
-            attaccaMostro1();
             // Il mostro si muove verso il basso
             if (!walkDownImg) {
                 walkDownImg = true;
@@ -187,7 +153,6 @@ public class Mostro {
             walkDownM1 = false;
             walkLeftM1 = true;
             walkRightM1 = false;
-            attaccaMostro1();
             // Il mostro si muove verso sinistra
             if (!walkLeftImg) {
                 walkLeftImg = true;
@@ -202,7 +167,6 @@ public class Mostro {
             walkDownM1 = false;
             walkLeftM1 = false;
             walkRightM1 = true;
-            attaccaMostro1();
             // Il mostro si muove verso destra
             if (!walkRightImg) {
                 walkRightImg = true;

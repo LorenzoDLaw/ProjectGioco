@@ -91,7 +91,6 @@ public class Zelda extends Application {
     Stage finestra;
     public void start(Stage primaryStage) throws Exception {
     	
-    	
     	finestra=primaryStage;;
         // Creo la griglia
         paneMenù.setPrefSize(WIDTH_GIOCO, HEIGHT_GIOCO);
@@ -138,7 +137,7 @@ public class Zelda extends Application {
         richiamaPersonaggio = new Personaggio(personaggio, WIDTH_GIOCO, HEIGHT_GIOCO, spritePersonaggio, tilesSize);
         richiamaMostro = new Mostro(rMostro1, rMostro2, rMostro3, WIDTH_GIOCO, HEIGHT_GIOCO, tilesSize, spriteMostro, spriteMostro2, spriteMostro3, personaggio);
         //posizione il mostro e do un colore al rettangolo
-        rMostro1.setFill(Color.BROWN); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
+        rMostro1.setFill(Color.TRANSPARENT); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
         rMostro1.setStroke(Color.TRANSPARENT);
         /*rMostro1.setX(WIDTH_GIOCO / 4); // Posizione iniziale del mostro
         rMostro1.setY(HEIGHT_GIOCO / 4);
@@ -146,10 +145,10 @@ public class Zelda extends Application {
         spriteMostro.setY(HEIGHT_GIOCO / 4);*/
         
         //mostro 2 
-        rMostro2.setFill(Color.BLUE); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
+        rMostro2.setFill(Color.TRANSPARENT); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
         rMostro2.setStroke(Color.TRANSPARENT);
         //mostro 3
-        rMostro3.setFill(Color.RED); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
+        rMostro3.setFill(Color.TRANSPARENT); // lo rendo trasparente cosi non sara visibile ma sara usato per le collisioni
         rMostro3.setStroke(Color.TRANSPARENT);
        
         //posiziono il punteggio e i cuori
@@ -205,7 +204,6 @@ public class Zelda extends Application {
     	timelineGioco.play();
     	if(haiPerso) {
     		timelineGioco.play();
-    		vitaPersonaggio=3;
     		Image fullVita = new Image(getClass().getResourceAsStream("Immagini/cuori/heartfull.png"));
     		healtImgWiew.setImage(fullVita);
     	}
@@ -298,7 +296,11 @@ public class Zelda extends Application {
     	paneWord.getChildren().add(paneComandi);
     }
     public void haiPersoMenu() {
+    	// fermo la timeline e riporto le variabili vita e counMostri ai loro valori iniziali
     	timelineGioco.stop();
+    	vitaPersonaggio=3;
+    	countMostriEliminati=0;
+    	//posizioni i bottoni e label per riniziare il gioco
     	bStart.setPrefSize(4*tilesSize, tilesSize);
     	bStart.setLayoutX(WIDTH_GIOCO/2-tilesSize*2);
     	bStart.setLayoutY(HEIGHT_GIOCO/2+tilesSize);
@@ -324,65 +326,73 @@ public class Zelda extends Application {
         richiamaMostro.muoviMostro();
         lPunteggio.setText("Mostri eliminati: " + countMostriEliminati);
         
-        // Verifica la collisione con i mostri
+        // Verifica la collisione con i mostri creadno 3 metodi intersect
         Shape intersect1 = Shape.intersect(personaggio, rMostro1);
         Shape intersect2 = Shape.intersect(personaggio, rMostro2);
         Shape intersect3 = Shape.intersect(personaggio, rMostro3);
+        
         if(fase1==true && inizioGioco==true) {
+        	// per posizionare all'inizio del gioco il primo mostro e riportare le variabili al loro stato iniziale
         	inizioGioco=false;
+        	fase2=false;
+        	fase3=false;
+        	mostro1Eliminato=false;
+        	mostro2Eliminato=false;
+            mostro3Eliminato=false;
+            haiPerso=false;
         	aggiungiMostro();
         }
         // Verifica la collisione tra il personaggio e il primo mostro
         if (intersect1.getBoundsInLocal().getWidth() != -1 ) {
-            System.out.println("collide");
+        	System.out.println("collide");
         	if (richiamaPersonaggio.hoAttaccato == true) {
-                timelineGioco.stop();
         		paneWord.getChildren().removeAll(spriteMostro, rMostro1);
+        		//posizion i mostri fuori dalla mappa senno vengono considerati collisioni pure se tolti dalla mappa
+        		rMostro1.setY(-tilesSize);
+        		rMostro1.setX(-tilesSize);
                 mostro1Eliminato = true;
                 countMostriEliminati++;
             } else {
                 // Perdita di vita solo se non è stato eliminato il mostro
                 if (vitaPersonaggio > 0) {
                     vitaPersonaggio--;
-                    System.out.println("cuori");
                     AggiornaVita();
                 }
             }
-        	timelineGioco.play();
         }
         // Verifica la collisione con il secondo mostro
         if (intersect2.getBoundsInLocal().getWidth() != -1 ) {
-            if (richiamaPersonaggio.hoAttaccato == true) {
-            	timelineGioco.stop();
+        	if (richiamaPersonaggio.hoAttaccato == true) {
             	paneWord.getChildren().removeAll(spriteMostro2, rMostro2);
-                mostro2Eliminato = true;
+            	//posizion i mostri fuori dalla mappa senno vengono considerati collisioni pure se tolti dalla mappa
+            	rMostro2.setY(-tilesSize);
+        		rMostro2.setX(-tilesSize);
+                mostro2Eliminato = true;  
                 countMostriEliminati++;
             } else {
                 // Perdita di vita solo se non è stato eliminato il mostro
                 if (vitaPersonaggio > 0) {
                     vitaPersonaggio--;
-                    System.out.println("cuori");
                     AggiornaVita();
                 }
             }
-            timelineGioco.play();
         }
         // Verifica la collisione con il terzo mostro
         if (intersect3.getBoundsInLocal().getWidth() != -1) {
             if (richiamaPersonaggio.hoAttaccato == true) {
-            	timelineGioco.stop();
             	paneWord.getChildren().removeAll(spriteMostro3, rMostro3);
+            	//posizion i mostri fuori dalla mappa senno vengono considerati collisioni pure se tolti dalla mappa
+            	rMostro3.setY(-tilesSize);
+        		rMostro3.setX(-tilesSize);
                 mostro3Eliminato = true;
-                countMostriEliminati++;
+                countMostriEliminati++;   
             } else {
                 // Perdita di vita solo se non è stato eliminato il mostro
                 if (vitaPersonaggio > 0) {
                     vitaPersonaggio--;
-                    System.out.println("cuori");
                     AggiornaVita();
                 }
             }
-            timelineGioco.play();
         }
         // Controllo se devo passare alla fase successiva
         if (fase1 && mostro1Eliminato) {
@@ -401,7 +411,8 @@ public class Zelda extends Application {
     }
 
     private void AggiornaVita() {
-		if (vitaPersonaggio==2) {
+		//gestisco la vita in base a vitaPersonaggio, ad ogni valore consiste uno stato
+    	if (vitaPersonaggio==2) {
 			Image heart2 = new Image(getClass().getResourceAsStream("Immagini/cuori/heart2.png"));
 		    healtImgWiew.setImage(heart2);
 		}
