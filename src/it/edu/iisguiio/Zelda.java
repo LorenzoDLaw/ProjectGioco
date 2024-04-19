@@ -91,11 +91,6 @@ public class Zelda extends Application {
     Stage finestra;
     public void start(Stage primaryStage) throws Exception {
     	
-    	//Font font = new Font(getClass().getResource("SuperPixel-m2L8j.ttf").toString(), 30);
-<<<<<<< HEAD
-    	//lPunteggio.setFont(font);
-=======
->>>>>>> 0703d126edd8eccd13250e81e1c6ff3d116abc58
     	
     	finestra=primaryStage;;
         // Creo la griglia
@@ -178,6 +173,9 @@ public class Zelda extends Application {
         
         scene.getStylesheets().add(getClass().getResource("Stile.css").toExternalForm());
         
+     
+
+       
     }
     
     public void premiTasto(KeyEvent e) {
@@ -263,14 +261,14 @@ public class Zelda extends Application {
     	Label labelMuoviAlto = new Label("Muovi verso l'alto");
     	labelMuoviAlto.setLayoutX(370.0);
     	labelMuoviAlto.setLayoutY(153.0);
-    	labelMuoviAlto.setPrefWidth(140.0);
+    	labelMuoviAlto.setPrefWidth(170.0);
     	labelMuoviAlto.setPrefHeight(25.0);
     	labelMuoviAlto.setFont(new Font(14.0));
 
     	Label labelMuoviBasso = new Label("Muovi verso il basso");
     	labelMuoviBasso.setLayoutX(370.0);
     	labelMuoviBasso.setLayoutY(191.0);
-    	labelMuoviBasso.setPrefWidth(140.0);
+    	labelMuoviBasso.setPrefWidth(170.0);
     	labelMuoviBasso.setPrefHeight(25.0);
     	labelMuoviBasso.setFont(new Font(14.0));
 
@@ -289,7 +287,7 @@ public class Zelda extends Application {
     	labelMuoviDestra.setFont(new Font(14.0));
 
     	Label labelAttacca = new Label("Attacca");
-    	labelAttacca.setLayoutX(375.0);
+    	labelAttacca.setLayoutX(387.0);
     	labelAttacca.setLayoutY(335.0);
     	labelAttacca.setPrefWidth(140.0);
     	labelAttacca.setPrefHeight(25.0);
@@ -305,13 +303,20 @@ public class Zelda extends Application {
     	bStart.setLayoutX(WIDTH_GIOCO/2-tilesSize*2);
     	bStart.setLayoutY(HEIGHT_GIOCO/2+tilesSize);
     	Label lPerso = new Label("RINIZIA");
-    	lPerso.setFont((Font.loadFont(getClass().getResourceAsStream("font/SuperPixel-m2L8j.ttf"), 38)));
-    	lPerso.setPrefSize(4*tilesSize, tilesSize);
-    	lPerso.setLayoutX(WIDTH_GIOCO/2-tilesSize*2);
+    	lPerso.setPrefSize(6*tilesSize, tilesSize);
+    	lPerso.setLayoutX(WIDTH_GIOCO/1.7-tilesSize*2);
     	lPerso.setLayoutY(HEIGHT_GIOCO/2-tilesSize);
     	paneHaiPerso.getChildren().addAll(lPerso , bStart);
     	paneWord.getChildren().add(paneHaiPerso);
     	bStart.setOnAction(start ->iniziaAvventura());
+    	
+    	
+
+    	lPerso.setId("lPerso");
+
+    	
+    	
+    	
     }
     
     public void aggiornaGioco() {
