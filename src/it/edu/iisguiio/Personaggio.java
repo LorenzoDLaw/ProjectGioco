@@ -26,7 +26,7 @@ public class Personaggio {
         this.spritePersonaggio = spritePersonaggio;
         this.TilesSize = TilesSize;;
         // Imposta il colore di riempimento trasparente
-        personaggio.setFill(Color.BROWN);
+        personaggio.setFill(Color.TRANSPARENT);
         // Imposta il colore del contorno trasparente
         personaggio.setStroke(Color.TRANSPARENT);
     }

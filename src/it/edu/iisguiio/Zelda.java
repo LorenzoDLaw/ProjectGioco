@@ -194,8 +194,8 @@ public class Zelda extends Application {
     	bComandi.setLayoutX(WIDTH_GIOCO/2-tilesSize*2);
     	bComandi.setLayoutY(HEIGHT_GIOCO/2+tilesSize);
     	paneMenù.getChildren().addAll(bComandi , bStart);
-    	paneWord.getChildren().add(paneMenù);
     	paneMenù.setBackground(null);
+    	paneWord.getChildren().addAll(paneMenù);
     	
     	bStart.setOnAction(start ->iniziaAvventura());
     	bComandi.setOnAction(e-> mostraComandi());
@@ -210,6 +210,7 @@ public class Zelda extends Application {
     	paneHaiPerso.getChildren().clear();
     	paneComandi.getChildren().clear();
     	paneMenù.getChildren().clear();
+    	paneWord.getChildren().removeAll(paneComandi, paneMenù, paneHaiPerso);
     }
     public void mostraComandi() {
 
