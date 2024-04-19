@@ -300,8 +300,9 @@ public class Zelda extends Application {
     	bStart.setLayoutY(HEIGHT_GIOCO/2+tilesSize);
     	Label lPerso = new Label("RINIZIA");
     	lPerso.setPrefSize(6*tilesSize, tilesSize);
-    	lPerso.setLayoutX(WIDTH_GIOCO/1.7-tilesSize*2);
+    	lPerso.setLayoutX(WIDTH_GIOCO/2-tilesSize*1.5);
     	lPerso.setLayoutY(HEIGHT_GIOCO/2-tilesSize);
+    	lPerso.setStyle("-fx-font-size: 45px;");
     	paneHaiPerso.getChildren().addAll(lPerso , bStart);
     	paneWord.getChildren().add(paneHaiPerso);
     	bStart.setOnAction(start ->iniziaAvventura());
